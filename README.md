@@ -4,7 +4,7 @@ A modern Fortran library for tensor calculus.
 
 ## Contributing
 
-### Mainn authors
+### Authors
 
 * [**Lukas Lamm**](https://www.llamm.de)
 
