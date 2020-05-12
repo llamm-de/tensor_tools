@@ -1,0 +1,65 @@
+# CMake Configuration file for TensorTools library
+#
+# Version: 0.1.0 (04/2020)
+# Author:  Lukas Lamm 
+
+#----------------------------------------------------------------------#
+# Define Cmake version
+#----------------------------------------------------------------------#
+cmake_minimum_required(VERSION 3.1...3.15)
+if(${CMAKE_VERSION} VERSION_LESS 3.12)
+    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+endif()
+
+#----------------------------------------------------------------------#
+# Set default build type to debug
+#----------------------------------------------------------------------#
+if(NOT DEFINED CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug
+        CACHE STRING "Choose type of build: Debug")
+else()
+    set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE}
+        CACHE STRING "Choose type of build: ${CMAKE_BUILD_TYPE}")
+endif()
+
+#----------------------------------------------------------------------#
+# Set compiler options (only gfortran at the moment)
+#----------------------------------------------------------------------#
+set(CMAKE_Fortan_FLAGS_DEBUG "-Wall -Wextra -Wsurprising -0g -g"
+    CACHE STRING "Compiler flags for debugging")
+set(CMAKE_Fortan_FLAGS_RELEASE "-O2"
+    CACHE STRING "Compiler flags for production")
+
+#----------------------------------------------------------------------#
+# Project & language definition
+#----------------------------------------------------------------------#
+project(TensorTools VERSION 0.1.0
+                    DESCRIPTION "A small modern fortran library for tensor calculus"
+                    LANGUAGES NONE)
+enable_language(Fortran)
+
+#----------------------------------------------------------------------#
+# Set directory for Fortran modules
+#----------------------------------------------------------------------#
+set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
+
+#----------------------------------------------------------------------#
+# Add subdirectories
+#----------------------------------------------------------------------#
+# Source files
+add_subdirectory(src)
+
+# Testing (To be added here)
+# Example: 
+# https://gitlab.com/CLIUtils/modern-cmake/-/blob/master/examples/extended-project/CMakeLists.txt
+
+# Only enable documentation if it is the main package
+# Needed: doxygen & graphviz
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    find_package(Doxygen)
+    if(Doxygen_FOUND)
+        add_subdirectory(docs)
+    else()
+        message(STATUS "Doxygen not found, not building docs")
+    endif()
+endif()
