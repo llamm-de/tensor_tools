@@ -2,12 +2,14 @@ pipeline {
     agent any 
     stages {
         stage('Build') { 
-            steps {
-                sh 'mkdir build'
-                sh 'cd build'
-                sh 'cmake ..'
-                sh 'make'
-            }
+            cmakeBuild
+            generator: 'Make',
+            buildDir: 'build',
+            sourceDir: 'src',
+            installation: 'InSearchPath',
+            steps: [
+                [args: 'all install', envVars: 'DESTDIR=${WORKSPACE}/artifacts']
+            ]
         }
     }
 }
