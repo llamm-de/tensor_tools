@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') { 
             cmakeBuild
-            generator: 'Make',
+            generator: 'make',
             buildDir: 'build',
             sourceDir: 'src',
             installation: 'InSearchPath',
