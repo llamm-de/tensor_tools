@@ -2,14 +2,8 @@ pipeline {
     agent any 
     stages {
         stage('Build') { 
-            cmakeBuild
-            generator: 'make',
-            buildDir: 'build',
-            sourceDir: 'src',
-            installation: 'InSearchPath',
-            steps: [
-                [args: 'all install', envVars: 'DESTDIR=${WORKSPACE}/artifacts']
-            ]
+            cmake arguments: '', installation: 'InSearchPath'
+            cmakeBuild buildType: 'Debug', cleanBuild: true, installation: 'InSearchPath', steps: [[withCmake: true]]
         }
     }
 }
