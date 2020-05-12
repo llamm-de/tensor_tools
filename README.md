@@ -2,7 +2,9 @@
 
 A modern Fortran library for tensor calculus.
 
-## Authors
+## Contributing
+
+### Authors
 
 * [**Lukas Lamm**](https://www.llamm.de)
 
