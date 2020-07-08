@@ -11,9 +11,9 @@ contains
     !! i.e. returns 1 if input parameters i and j are equal.
     !! Returns 0 else.
     !!
-    !! @param[in]  i    Integer 
-    !! @param[in]  j    Integer 
-    !! @return     res  Result (1 or 0)
+    !! @param  i    Integer 
+    !! @param  j    Integer 
+    !! @return res  Result (1 or 0)
     pure function kronecker(i,j) result(res)
         integer, intent(in) :: i,j
         integer             :: res
@@ -24,5 +24,26 @@ contains
             res = 0
         endif
     end function kronecker
+
+    !> Trace of a tensor / matrix
+    !!
+    !! @param a   Matrix tensor (rank n)
+    !! @param res Trace of the matrix / tensor
+    pure function trace(a) result(res)
+        real(kind=8), dimension (:,:), intent(in) :: a
+        real(kind=8)                              :: res
+
+        integer :: i
+        integer :: j
+
+        res = 0.0d0
+
+        do i = 1,size(a,1)
+            do j = 1,size(a,2)
+                res = res + a(i,j)
+            end do
+        end do
+
+    end function trace
 
 end module libtt_common
