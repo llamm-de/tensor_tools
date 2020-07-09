@@ -6,8 +6,9 @@
 # Author:  Lukas Lamm 
 
 # Set source files
-set(SOURCE libtt_common.f90
-           libtt_products.f90)
+set(SOURCE  libtt_exception.f90
+            libtt_common.f90
+            libtt_products.f90)
 
 # Define library to build
 add_library(tensortools STATIC ${SOURCE})
