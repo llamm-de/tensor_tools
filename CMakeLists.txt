@@ -49,9 +49,12 @@ set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
 # Source files
 add_subdirectory(src)
 
-# Testing (To be added here)
-# Example: 
-# https://gitlab.com/CLIUtils/modern-cmake/-/blob/master/examples/extended-project/CMakeLists.txt
+# Testing
+# Examples: 
+# https://github.com/Goddard-Fortran-Ecosystem/pFUnit_demos/tree/main/Basic
+find_package(PFUNIT REQUIRED)
+enable_testing()
+add_subdirectory(tests)
 
 # Only enable documentation if it is the main package
 # Needed: doxygen & graphviz

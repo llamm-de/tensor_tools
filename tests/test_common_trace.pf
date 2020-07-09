@@ -1,0 +1,39 @@
+module test_common_trace
+    use funit
+    use libtt_common
+
+    implicit none
+
+contains
+
+    @test
+    subroutine trace_2x2()
+        real(kind=8), dimension(2,2) :: A
+        real(kind=8) :: res
+
+        A   = reshape((/1, 2, 3, 4/), (/2, 2/))
+
+        @assertEqual(5, trace(A))
+    end subroutine trace_2x2
+
+    !@test
+    subroutine trace_failsIfNonSymmetric()
+        real(kind=8), dimension(2,1) :: A
+
+        A = 0.0d0
+
+        @assertExceptionRaised('Input must be symmetric!')
+
+    end subroutine trace_failsIfNonSymmetric
+
+    @test
+    subroutine trace_3x3()
+        real(kind=8), dimension(2,2) :: A
+        real(kind=8) :: res
+
+        A   = reshape((/1, 2, 3, 4/), (/2, 2/))
+
+        @assertEqual(5, trace(A))
+    end subroutine trace_3x3
+
+end module test_common_trace

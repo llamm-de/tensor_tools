@@ -1,0 +1,27 @@
+module test_common_kronecker
+    use funit
+    use libtt_common
+
+    implicit none
+
+contains
+
+    @test
+    subroutine kronecker_iEqualJ()
+        integer :: res
+
+        res = kronecker(1,1)
+
+        @assertTrue(res == 1)
+    end subroutine kronecker_iEqualJ
+
+    @test
+    subroutine kronecker_iNotEqualJ()
+        integer :: res
+
+        res = kronecker(1,2)
+
+        @assertTrue(res == 0)
+    end subroutine kronecker_iNotEqualJ
+
+end module test_common_kronecker
