@@ -49,16 +49,24 @@ set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
 # Source files
 add_subdirectory(src)
 
+#----------------------------------------------------------------------#
 # Testing
-# Examples: 
-# https://github.com/Goddard-Fortran-Ecosystem/pFUnit_demos/tree/main/Basic
-find_package(PFUNIT REQUIRED)
-enable_testing()
-add_subdirectory(tests)
+# Examples: https://github.com/Goddard-Fortran-Ecosystem/pFUnit_demos/tree/main/Basic
+#----------------------------------------------------------------------#
+option(LIBTT_TESTS "Enable/disable testing framework" ON)
+if(LIBTT_TESTS)
+    find_package(PFUNIT REQUIRED)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
+#----------------------------------------------------------------------#
+# Documentation
 # Only enable documentation if it is the main package
 # Needed: doxygen & graphviz
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+#----------------------------------------------------------------------#
+option(LIBTT_DOCS "Enable/disable documentation" OFF)
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) AND LIBTT_DOCS)
     find_package(Doxygen)
     if(Doxygen_FOUND)
         add_subdirectory(docs)
