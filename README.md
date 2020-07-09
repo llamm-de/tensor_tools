@@ -1,12 +1,28 @@
-# TensorTools 2
+# TensorTools
 
 A modern Fortran library for tensor calculus.
 
+## Dependencies
+This project has the following optional dependencies:
+
+* [**pFUnit**](https://github.com/Goddard-Fortran-Ecosystem/pFUnit) - A unit testing framework for Fortran
+* [**Doxygen**](https://www.doxygen.nl/) - Automated documentation tool
+
+These dependencies are enabled by default. If you do not wish to use them.
+As described below, you can turn them off individually by passing the appropiate flags to CMake. Keep in mind, that you won't be able to generate unit tests and/or a documentation without those libraries.
+
+## Installation
+
+### First steps
+
+
 ## Contributing
 
-### Authors
+If you wish to contribute to this project, feel free to report issues on GitHub or to even fork and open a pull request.
 
-* [**Lukas Lamm**](https://www.llamm.de)
+### Main authors
+
+* [**Lukas Lamm**](https://www.llamm.de) - Just some random guy working with computers
 
 ## License & Copyright
 
