@@ -34,14 +34,11 @@ contains
         real(kind=8)                              :: res
 
         integer :: i
-        integer :: j
 
         res = 0.0d0
 
         do i = 1,size(a,1)
-            do j = 1,size(a,2)
-                res = res + a(i,j)
-            end do
+            res = res + a(i,i)
         end do
 
     end function trace
