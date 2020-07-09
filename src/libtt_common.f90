@@ -2,6 +2,8 @@
 !! library.
 module libtt_common
 
+    use libtt_exception, only: throw_exception
+
     implicit none
 
 contains
@@ -29,11 +31,16 @@ contains
     !!
     !! @param a   Matrix tensor (rank n)
     !! @param res Trace of the matrix / tensor
-    pure function trace(a) result(res)
+    function trace(a) result(res)
         real(kind=8), dimension (:,:), intent(in) :: a
         real(kind=8)                              :: res
+        integer                                   :: i
 
-        integer :: i
+        if (size(a,1) /= size(a,2)) then
+            call throw_exception("libtt_common.f90", 39, &
+                                 message='Input must be symmetric!')
+            return
+        end if
 
         res = 0.0d0
 
