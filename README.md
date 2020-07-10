@@ -1,4 +1,5 @@
 # TensorTools
+[![Build Status](https://jenkins.llamm.de/buildStatus/icon?job=tensor_tools_2%2Fmaster)](https://jenkins.llamm.de/job/tensor_tools_2/job/master/)
 ![](https://img.shields.io/badge/license-LGPL--V3-blue)
 
 A modern Fortran library for tensor calculus.
