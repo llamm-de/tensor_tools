@@ -10,6 +10,12 @@ module libtt_tensors_common
     public :: symmetric
     public :: scew
     public :: inverse
+    public :: diag
+
+    interface diag
+        module procedure getDiagElementsFromTensor
+        module procedure makeDiagonalTensor
+    end interface diag
 
 contains
 
@@ -69,5 +75,32 @@ contains
         res(3,3) = A(1,1)*A(2,2) - A(2,1)*A(1,2)
         res      = 1/det(A) * res
     end function inverse
+
+    !> Get diagonal element from tensor 2nd order
+    !!
+    !! @param  A   Tensor of second order
+    !! @return res Array of diagonal elements
+    pure function getDiagElementsFromTensor(A) result(res)
+        real(kind=8), dimension(3,3), intent(in) :: A
+        real(kind=8), dimension(3)               :: res
+
+        res(1) = A(1,1)
+        res(2) = A(2,2)
+        res(3) = A(3,3)
+    end function getDiagElementsFromTensor
+
+    !> Make diagonal tensor from vector entries
+    !!
+    !! @param  vec Array containing diagonal entries
+    !! @return res Diagonal tensor
+    pure function makeDiagonalTensor(vec) result(res)
+        real(kind=8), dimension(3), intent(in) :: vec
+        real(kind=8), dimension(3,3)           :: res
+
+        res = 0.0d0
+        res(1,1) = vec(1)
+        res(2,2) = vec(2)
+        res(3,3) = vec(3)
+    end function makeDiagonalTensor
 
 end module libtt_tensors_common
