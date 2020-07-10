@@ -49,5 +49,4 @@ contains
         @assertEqual(expected_result, getGreenLagrange(defGrad))
     end subroutine assert_greenLagrange
 
-
 end module test_tensors_physics
