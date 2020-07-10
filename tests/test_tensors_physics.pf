@@ -39,11 +39,15 @@ contains
     end subroutine assert_leftCauchyGreen
 
 
-    !@test
-    !subroutine assert_greenLagrange()
+    @test
+    subroutine assert_greenLagrange()
+        real(kind=8), dimension(3,3) :: expected_result
 
-
-    !end subroutine assert_greenLagrange
+        expected_result = 0.5 * reshape((/13, 32, 50, 32, 76, 122, 50, 122, 193/),&
+                                  (/3,3/))
+        
+        @assertEqual(expected_result, getGreenLagrange(defGrad))
+    end subroutine assert_greenLagrange
 
 
 end module test_tensors_physics
