@@ -7,21 +7,21 @@ module test_common_kronecker
 contains
 
     @test
-    subroutine kronecker_iEqualJ()
+    subroutine assert_iEqualJReturnsOne()
         integer :: res
 
         res = kronecker(1,1)
 
         @assertTrue(res == 1)
-    end subroutine kronecker_iEqualJ
+    end subroutine assert_iEqualJReturnsOne
 
     @test
-    subroutine kronecker_iNotEqualJ()
+    subroutine assert_iNotEqualJReturnsZero()
         integer :: res
 
         res = kronecker(1,2)
 
         @assertTrue(res == 0)
-    end subroutine kronecker_iNotEqualJ
+    end subroutine assert_iNotEqualJReturnsZero
 
 end module test_common_kronecker

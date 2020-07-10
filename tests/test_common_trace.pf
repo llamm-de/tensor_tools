@@ -7,7 +7,7 @@ module test_common_trace
 contains
 
     !@test
-    subroutine trace_failsIfNonSymmetric()
+    subroutine assert_failsIfNonSymmetric()
         real(kind=8), dimension(2,1) :: A
         real(kind=8)                 :: res
 
@@ -16,26 +16,26 @@ contains
 
         @assertExceptionRaised('Input must be symmetric!')
 
-    end subroutine trace_failsIfNonSymmetric
+    end subroutine assert_failsIfNonSymmetric
 
     @test
-    subroutine trace_2x2()
+    subroutine assert_result2x2()
         real(kind=8), dimension(2,2) :: A
         real(kind=8) :: res
 
         A   = reshape((/1, 2, 3, 4/), (/2, 2/))
 
         @assertEqual(5, trace(A))
-    end subroutine trace_2x2
+    end subroutine assert_result2x2
 
     @test
-    subroutine trace_3x3()
+    subroutine assert_result3x3()
         real(kind=8), dimension(3,3) :: A
         real(kind=8) :: res
 
         A   = reshape((/1, 2, 3, 4, 5, 6, 7, 8, 9/), (/3, 3/))
 
         @assertEqual(15, trace(A))
-    end subroutine trace_3x3
+    end subroutine assert_result3x3
 
 end module test_common_trace
