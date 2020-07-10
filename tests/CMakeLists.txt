@@ -1,5 +1,5 @@
 add_pfunit_ctest (libtt_common_testSuite
-    TEST_SOURCES test_common_kronecker.pf test_common_trace.pf
+    TEST_SOURCES test_common.pf
     LINK_LIBRARIES tensortools
 )
 

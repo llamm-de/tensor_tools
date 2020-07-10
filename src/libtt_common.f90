@@ -9,6 +9,7 @@ module libtt_common
 
     public :: kronecker
     public :: trace
+    public :: det
     
 contains
 
@@ -53,5 +54,17 @@ contains
         end do
 
     end function trace
+
+    pure function det(A) result(res)
+        real(kind=8), dimension(3,3), intent(in) :: A
+        real(kind=8)                             :: res
+
+        res = A(1,1)*A(2,2)*A(3,3) - &
+              A(1,1)*A(2,3)*A(3,2) - &
+              A(2,1)*A(1,2)*A(3,3) + &
+              A(2,1)*A(1,3)*A(3,2) + &
+              A(3,1)*A(1,2)*A(2,3) - &
+              A(3,1)*A(1,3)*A(2,2)
+    end function det
 
 end module libtt_common
