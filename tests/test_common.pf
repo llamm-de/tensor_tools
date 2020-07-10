@@ -59,8 +59,12 @@ contains
 
     @test
     subroutine assert_determinant()
+        real(kind=8), dimension(3,3), parameter :: B = reshape((/2, 2, 3, &
+                                                                 4, 5, 6, &
+                                                                 7, 8, 9/),&
+                                                               (/3,3/))
 
-        @assertEqual(0.0d0, det(A))
+        @assertEqual(-3.0d0, det(B))
      end subroutine assert_determinant
 
 end module test_common
