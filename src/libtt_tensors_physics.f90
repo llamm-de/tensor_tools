@@ -1,5 +1,5 @@
 !> Module for special tensors used in pyhsical simulations (e.g. solid mechanics)
-module libtt_physics_tensors
+module libtt_tensors_physics
 
     implicit none
     private
@@ -35,4 +35,4 @@ contains
 
     end function getLeftCauchyGreen
 
-end module libtt_physics_tensors
+end module libtt_tensors_physics
