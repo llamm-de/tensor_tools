@@ -31,4 +31,17 @@ contains
     end subroutine assert_symmetric
 
 
+    @test
+    subroutine assert_scew()
+        real(kind=8), dimension(3,3) :: A
+
+        A = reshape((/1, 2, 3, 4, 5, 6, 7, 8, 9/),&
+                    (/3,3/))
+
+        expected_result = reshape((/0, -1, -2, 1, 0, -1, 2, 1, 0/),&
+                                   (/3,3/))
+
+        @assertEqual(expected_result, scew(A))
+    end subroutine assert_scew
+
 end module test_tensors_common
