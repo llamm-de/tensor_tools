@@ -34,8 +34,8 @@ contains
 
     !> Trace of a tensor / matrix
     !!
-    !! @param a   Matrix tensor (rank n)
-    !! @param res Trace of the matrix / tensor
+    !! @param  a   Matrix tensor (rank n)
+    !! @return res Trace of the matrix / tensor
     function trace(a) result(res)
         real(kind=8), dimension (:,:), intent(in) :: a
         real(kind=8)                              :: res
@@ -55,16 +55,20 @@ contains
 
     end function trace
 
-    pure function det(A) result(res)
-        real(kind=8), dimension(3,3), intent(in) :: A
+    !> Determinant of 2nd order tensor
+    !!
+    !! @param  a   Matrix tensor (rank n)
+    !! @return res Trace of the matrix / tensor
+    pure function det(a) result(res)
+        real(kind=8), dimension(3,3), intent(in) :: a
         real(kind=8)                             :: res
 
-        res = A(1,1)*A(2,2)*A(3,3) - &
-              A(1,1)*A(2,3)*A(3,2) - &
-              A(2,1)*A(1,2)*A(3,3) + &
-              A(2,1)*A(1,3)*A(3,2) + &
-              A(3,1)*A(1,2)*A(2,3) - &
-              A(3,1)*A(1,3)*A(2,2)
+        res = a(1,1)*a(2,2)*a(3,3) - &
+              a(1,1)*a(2,3)*a(3,2) - &
+              a(2,1)*a(1,2)*a(3,3) + &
+              a(2,1)*a(1,3)*a(3,2) + &
+              a(3,1)*a(1,2)*a(2,3) - &
+              a(3,1)*a(1,3)*a(2,2)
     end function det
 
 end module libtt_common
