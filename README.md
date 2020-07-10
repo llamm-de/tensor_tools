@@ -1,5 +1,5 @@
 # TensorTools
-https://img.shields.io/badge/license-LGPL--V3-blue
+![](https://img.shields.io/badge/license-LGPL--V3-blue)
 
 A modern Fortran library for tensor calculus.
 
