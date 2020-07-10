@@ -2,14 +2,17 @@
 module libtt_products
 
     implicit none
+    private
+
+    public :: doubleContract
     
     !> Double contracting (inner) product A:B for tensors of various
     !! ranks. 
-    interface double_contract
+    interface doubleContract
         module procedure double_contract_ranks22
         module procedure double_contract_ranks24    
         module procedure double_contract_ranks42 
-    end interface double_contract
+    end interface doubleContract
 
 contains
 

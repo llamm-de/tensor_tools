@@ -1,0 +1,66 @@
+module test_products_doubleContract
+    use funit
+    use libtt_products
+
+    implicit none
+    
+    real(kind=8), dimension(3,3)     :: A
+    real(kind=8), dimension(3,3)     :: B
+    real(kind=8), dimension(3,3,3,3) :: C
+
+contains
+
+    @before
+    subroutine set_up()
+        A = reshape((/1, 2, 3, 4, 5, 6, 7, 8, 9/),&
+                    (/3,3/))
+        B = reshape((/2, 4, 3, 5, 1, 2, 4, 3, 4/),&
+                    (/3,3/))
+        C = reshape((/2, 2, 3, 5, 1, 5, 2, 7, 4, &
+                      1, 4, 7, 5, 2, 2, 4, 3, 5, &
+                      4, 5, 8, 5, 4, 2, 4, 2, 7, &
+                      3, 4, 6, 5, 3, 2, 8, 6, 4, &
+                      7, 9, 3, 5, 9, 2, 9, 3, 2, &
+                      5, 3, 2, 5, 5, 2, 4, 4, 6, &
+                      3, 0, 3, 5, 2, 2, 7, 3, 5, &
+                      1, 2, 4, 1, 1, 2, 9, 8, 4, &
+                      1, 4, 3, 1, 5, 2, 4, 3, 4/),&
+                      (/3,3,3,3/))                                       
+    end subroutine set_up
+
+
+    @test 
+    subroutine assert_doubleContraction_rank22()
+        real(kind=8)            :: result
+        real(kind=8), parameter :: expectedResult = 144.0d0
+
+        call doubleContract(result, A, B)
+
+        @assertEqual(expectedResult, result)
+    end subroutine assert_doubleContraction_rank22
+
+    @test 
+    subroutine assert_doubleContraction_rank24()
+        real(kind=8), dimension(3,3) :: result
+        real(kind=8), dimension(3,3) :: expectedResult
+
+        call doubleContract(result, A, C)
+
+        expectedResult = reshape((/176, 169, 197, 216, 216, 188, 172, 201, 147/), (/3,3/))
+
+        @assertEqual(expectedResult, result)
+    end subroutine assert_doubleContraction_rank24
+
+    @test 
+    subroutine assert_doubleContraction_rank42()
+        real(kind=8), dimension(3,3) :: result
+        real(kind=8), dimension(3,3) :: expectedResult
+
+        call doubleContract(result, C, A)
+
+        expectedResult = reshape((/131, 156, 172, 157, 171, 93, 280, 194, 200/), (/3,3/))
+
+        @assertEqual(expectedResult, result)
+    end subroutine assert_doubleContraction_rank42
+
+end module test_products_doubleContract
