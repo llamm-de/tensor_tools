@@ -5,7 +5,11 @@ module libtt_common
     use libtt_exception, only: throw_exception
 
     implicit none
+    private
 
+    public :: kronecker
+    public :: trace
+    
 contains
 
     !> Kronecker delta function
