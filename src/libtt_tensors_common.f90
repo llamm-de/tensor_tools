@@ -1,7 +1,7 @@
 !> Module for common tensors
 module libtt_tensors_common
     
-    use libtt_common, only: det
+    use libtt_common, only: det, trace
 
     implicit none
     private
@@ -11,6 +11,7 @@ module libtt_tensors_common
     public :: scew
     public :: inverse
     public :: diag
+    public :: dev
 
     interface diag
         module procedure getDiagElementsFromTensor
@@ -102,5 +103,17 @@ contains
         res(2,2) = vec(2)
         res(3,3) = vec(3)
     end function makeDiagonalTensor
+
+    !> Get deviatoric part of 2nd order tensor
+    !!
+    !! @param  A   2nd order tensor
+    !! @return res Deviatoric part of A
+    pure function dev(A) result(res)
+        real(kind=8), dimension(3,3), intent(in)  :: A
+        real(kind=8), dimension(3,3)              :: res
+
+        res = A - trace(A)/3 * eye()
+
+    end function dev
 
 end module libtt_tensors_common
