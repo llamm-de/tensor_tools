@@ -1,10 +1,11 @@
 module test_tensors_physics
     use funit
+    use libtt_precision
     use libtt_tensors_physics
 
     implicit none
 
-    real(kind=8), dimension(3,3) :: defGrad
+    real(kind=dp), dimension(3,3) :: defGrad
 
 contains
 
@@ -19,7 +20,7 @@ contains
 
     @test
     subroutine assert_rightCauchyGreen()
-        real(kind=8), dimension(3,3) :: expected_rightCauchyGreen
+        real(kind=dp), dimension(3,3) :: expected_rightCauchyGreen
 
         expected_rightCauchyGreen = reshape((/14, 32, 50, 32, 77, 122, 50, 122, 194/),&
                                    (/3,3/))
@@ -30,7 +31,7 @@ contains
 
     @test
     subroutine assert_leftCauchyGreen()
-        real(kind=8), dimension(3,3) :: expected_leftCauchyGreen
+        real(kind=dp), dimension(3,3) :: expected_leftCauchyGreen
 
         expected_leftCauchyGreen = reshape((/66, 78, 90, 78, 93, 108, 90, 108, 126/),&
                                   (/3,3/))
@@ -41,7 +42,7 @@ contains
 
     @test
     subroutine assert_greenLagrange()
-        real(kind=8), dimension(3,3) :: expected_result
+        real(kind=dp), dimension(3,3) :: expected_result
 
         expected_result = 0.5 * reshape((/13, 32, 50, 32, 76, 122, 50, 122, 193/),&
                                   (/3,3/))

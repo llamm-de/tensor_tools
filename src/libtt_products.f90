@@ -1,6 +1,8 @@
 !> Collection of tensor products for tensors of different ranks.
 module libtt_products
 
+    use libtt_precision
+    
     implicit none
     private
 
@@ -30,8 +32,8 @@ contains
     !! @param[in]  b      Second tensor of product A:B
     !! @param[out] result Scalar result of product A:B
     pure function double_contract_ranks22(a, b) result(res)
-        real(kind=8)                              :: res        
-        real(kind=8), dimension (3,3), intent(in) :: a, b
+        real(kind=dp)                              :: res        
+        real(kind=dp), dimension (3,3), intent(in) :: a, b
         
         integer :: i,j
     
@@ -48,9 +50,9 @@ contains
     !! @param[in]  b      Second tensor (rank 4) of product A:B
     !! @param[out] result Rank 2 tensor result of product A:B
     pure function double_contract_ranks24(a, b) result(res)
-        real(kind=8), dimension(3,3,3,3), intent(in) :: b
-        real(kind=8), dimension(3,3), intent(in)     :: a
-        real(kind=8), dimension(3,3)                 ::res
+        real(kind=dp), dimension(3,3,3,3), intent(in) :: b
+        real(kind=dp), dimension(3,3), intent(in)     :: a
+        real(kind=dp), dimension(3,3)                 ::res
         
         integer :: i, j, m, n
 
@@ -70,9 +72,9 @@ contains
     !! @param[in]  b      Second tensor (rank 2) of product A:B
     !! @param[out] result Rank 2 tensor result of product A:B
     pure function double_contract_ranks42(a, b) result(res)
-        real(kind=8), dimension(3,3,3,3), intent(in) :: a
-        real(kind=8), dimension(3,3), intent(in)     :: b
-        real(kind=8), dimension(3,3)                 :: res
+        real(kind=dp), dimension(3,3,3,3), intent(in) :: a
+        real(kind=dp), dimension(3,3), intent(in)     :: b
+        real(kind=dp), dimension(3,3)                 :: res
         
         integer :: i, j, k, l
 

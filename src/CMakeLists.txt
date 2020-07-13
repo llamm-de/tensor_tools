@@ -11,6 +11,7 @@ set(SOURCE  libtt_exception.f90
             libtt_products.f90
             libtt_tensors_physics.f90
             libtt_tensors_common.f90
+            libtt_precision.f90
             )
 
 # Define library to build

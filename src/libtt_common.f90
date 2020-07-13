@@ -2,6 +2,7 @@
 !! library.
 module libtt_common
 
+    use libtt_precision
     use libtt_exception, only: throw_exception
 
     implicit none
@@ -37,8 +38,8 @@ contains
     !! @param  a   Matrix tensor (rank n)
     !! @return res Trace of the matrix / tensor
     pure function trace(a) result(res)
-        real(kind=8), dimension (:,:), intent(in) :: a
-        real(kind=8)                              :: res
+        real(kind=dp), dimension (:,:), intent(in) :: a
+        real(kind=dp)                              :: res
         integer                                   :: i
 
         res = 0.0d0
@@ -54,8 +55,8 @@ contains
     !! @param  a   Matrix tensor (rank n)
     !! @return res Trace of the matrix / tensor
     pure function det(a) result(res)
-        real(kind=8), dimension(3,3), intent(in) :: a
-        real(kind=8)                             :: res
+        real(kind=dp), dimension(3,3), intent(in) :: a
+        real(kind=dp)                             :: res
 
         res = a(1,1)*a(2,2)*a(3,3) - &
               a(1,1)*a(2,3)*a(3,2) - &
