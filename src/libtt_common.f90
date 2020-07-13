@@ -36,16 +36,10 @@ contains
     !!
     !! @param  a   Matrix tensor (rank n)
     !! @return res Trace of the matrix / tensor
-    function trace(a) result(res)
+    pure function trace(a) result(res)
         real(kind=8), dimension (:,:), intent(in) :: a
         real(kind=8)                              :: res
         integer                                   :: i
-
-        if (size(a,1) /= size(a,2)) then
-            call throw_exception("libtt_common.f90", 39, &
-                                 message='Input must be symmetric!')
-            return
-        end if
 
         res = 0.0d0
 
