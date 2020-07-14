@@ -75,10 +75,19 @@ contains
     end subroutine print4th
 
     subroutine print_matrix(a)
-        real(kind=dp), dimension(3,3) :: a
+        real(kind=dp), dimension(:,:) :: a
         integer                       :: i
-        do i = 1,3,1
-            write(*,'(6X, F16.8, F16.8, F16.8)') a(i,1), a(i,2), a(i,3)
+        integer                       :: j
+        do i = 1,size(a,1),1
+            do j = 1,size(a,2),1
+                if (j == 1) then
+                    write(*,'(6X, F16.8)', advance="no") a(i,j)
+                else if (j == size(a,2)) then 
+                    write(*,'(F16.8)') a(i,j)
+                else
+                    write(*,'(F16.8)', advance="no") a(i,j)
+                end if
+            end do
         end do
 
     end subroutine print_matrix
