@@ -30,10 +30,7 @@ contains
         integer                                 :: i
 
         call print_tensorInfo(1)
-
-        do i = 1,3,1
-            write(*,'(6X, F16.8)') a(i)
-        end do
+        call print_vector(a)
 
     end subroutine print1st
 
@@ -91,6 +88,16 @@ contains
         end do
 
     end subroutine print_matrix
+
+    subroutine print_vector(a)
+        real(kind=dp), dimension(:), intent(in) :: a
+        integer                                 :: i
+
+        do i = 1,size(a,1),1
+            write(*, '(6X, F16.8)') a(i)
+        end do
+
+    end subroutine print_vector
 
     subroutine print_tensorInfo(rank)
         integer, intent(in) :: rank
