@@ -1,7 +1,9 @@
 module test_voigt
     use funit
-    use libtt_precision, only: dp
-    use libtt_voigt,     only: toVoigt, toVoigtNonSym
+    use libtt_precision,      only: dp
+    use libtt_tensors_common, only: symmetric
+    use libtt_voigt,          only: toVoigt, toVoigtNonSym, &
+                                    toTensor, toTensorNonSym
 
     implicit none
 
@@ -33,4 +35,20 @@ contains
         @assertEqual(expected_result, toVoigt(A))
     end subroutine assert_toVoigt2nd
 
+    @test
+    subroutine assert_toTensor2nd_nonSym()
+        real(kind=dp), dimension(9) :: input = (/1, 4, 7, 2, 5, 8, 3, 6, 9/)
+
+        @assertEqual(A, toTensorNonSym(input))
+    end subroutine assert_toTensor2nd_nonSym
+
+    @test
+    subroutine assert_toTensor2nd()
+        real(kind=dp), dimension(6)   :: input = (/1, 5, 9, 4, 8, 7/)
+        real(kind=dp), dimension(3,3) :: expected_result
+
+        expected_result = reshape((/1, 4, 7, 4, 5, 8, 7, 8, 9/),(/3,3/))
+        
+        @assertEqual(expected_result, toTensor(input))
+    end subroutine assert_toTensor2nd
 end module test_voigt
