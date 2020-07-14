@@ -1,12 +1,13 @@
 module test_products_doubleContract
     use funit
+    use libtt_precision
     use libtt_products
 
     implicit none
     
-    real(kind=8), dimension(3,3)     :: A
-    real(kind=8), dimension(3,3)     :: B
-    real(kind=8), dimension(3,3,3,3) :: C
+    real(kind=dp), dimension(3,3)     :: A
+    real(kind=dp), dimension(3,3)     :: B
+    real(kind=dp), dimension(3,3,3,3) :: C
 
 contains
 
@@ -30,37 +31,55 @@ contains
 
 
     @test 
-    subroutine assert_doubleContraction_rank22()
-        real(kind=8)            :: result
-        real(kind=8), parameter :: expectedResult = 144.0d0
+    subroutine assert_rank22()
+        real(kind=dp)            :: result
+        real(kind=dp), parameter :: expectedResult = 144.0d0
 
-        call doubleContract(result, A, B)
-
-        @assertEqual(expectedResult, result)
-    end subroutine assert_doubleContraction_rank22
+        @assertEqual(expectedResult, doubleContract(A, B))
+    end subroutine assert_rank22
 
     @test 
-    subroutine assert_doubleContraction_rank24()
-        real(kind=8), dimension(3,3) :: result
-        real(kind=8), dimension(3,3) :: expectedResult
+    subroutine assert_rank22_operator()
+        real(kind=dp)            :: result
+        real(kind=dp), parameter :: expectedResult = 144.0d0
 
-        call doubleContract(result, A, C)
+        @assertEqual(expectedResult, A.ddot.B)
+    end subroutine assert_rank22_operator
+
+    @test 
+    subroutine assert_rank24()
+        real(kind=dp), dimension(3,3) :: expectedResult
 
         expectedResult = reshape((/176, 169, 197, 216, 216, 188, 172, 201, 147/), (/3,3/))
 
-        @assertEqual(expectedResult, result)
-    end subroutine assert_doubleContraction_rank24
+        @assertEqual(expectedResult, doubleContract(A, C))
+    end subroutine assert_rank24
 
     @test 
-    subroutine assert_doubleContraction_rank42()
-        real(kind=8), dimension(3,3) :: result
-        real(kind=8), dimension(3,3) :: expectedResult
+    subroutine assert_rank24_operator()
+        real(kind=dp), dimension(3,3) :: expectedResult
 
-        call doubleContract(result, C, A)
+        expectedResult = reshape((/176, 169, 197, 216, 216, 188, 172, 201, 147/), (/3,3/))
+
+        @assertEqual(expectedResult, A.ddot.C)
+    end subroutine assert_rank24_operator
+
+    @test 
+    subroutine assert_rank42()
+        real(kind=dp), dimension(3,3) :: expectedResult
 
         expectedResult = reshape((/131, 156, 172, 157, 171, 93, 280, 194, 200/), (/3,3/))
 
-        @assertEqual(expectedResult, result)
-    end subroutine assert_doubleContraction_rank42
+        @assertEqual(expectedResult, doubleContract(C, A))
+    end subroutine assert_rank42
+
+    @test 
+    subroutine assert_rank42_operator()
+        real(kind=dp), dimension(3,3) :: expectedResult
+
+        expectedResult = reshape((/131, 156, 172, 157, 171, 93, 280, 194, 200/), (/3,3/))
+
+        @assertEqual(expectedResult, C.ddot.A)
+    end subroutine assert_rank42_operator
 
 end module test_products_doubleContract

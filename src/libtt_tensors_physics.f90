@@ -1,6 +1,7 @@
 !> Module for special tensors used in pyhsical simulations (e.g. solid mechanics)
 module libtt_tensors_physics
 
+    use libtt_precision
     use libtt_tensors_common
 
     implicit none
@@ -18,8 +19,8 @@ contains
     !! @return res     Right Cauchy Green tensor 
     pure function getRightCauchyGreen(defGrad) result(res)
 
-        real(kind=8), dimension(3,3), intent(in) :: defGrad
-        real(kind=8), dimension(3,3) :: res
+        real(kind=dp), dimension(3,3), intent(in) :: defGrad
+        real(kind=dp), dimension(3,3) :: res
 
         res = matmul(transpose(defGrad), defGrad)
 
@@ -31,8 +32,8 @@ contains
     !! @return res     Left Cauchy Green tensor 
     pure function getLeftCauchyGreen(defGrad) result(res)
 
-        real(kind=8), dimension(3,3), intent(in) :: defGrad
-        real(kind=8), dimension(3,3) :: res
+        real(kind=dp), dimension(3,3), intent(in) :: defGrad
+        real(kind=dp), dimension(3,3) :: res
 
         res = matmul(defGrad, transpose(defGrad))
 
@@ -44,8 +45,8 @@ contains
     !! @return res     Green Lagrange strain tensor
     pure function getGreenLagrange(defGrad) result(res)
 
-        real(kind=8), dimension(3,3), intent(in) :: defGrad
-        real(kind=8), dimension(3,3)             :: res
+        real(kind=dp), dimension(3,3), intent(in) :: defGrad
+        real(kind=dp), dimension(3,3)             :: res
 
         res = 0.5d0*(getRightCauchyGreen(defGrad) - eye())
 
