@@ -1,0 +1,36 @@
+module test_voigt
+    use funit
+    use libtt_precision, only: dp
+    use libtt_voigt,     only: toVoigt, toVoigtNonSym
+
+    implicit none
+
+    real(kind=dp), dimension(3,3) :: A
+
+contains
+
+    @before
+    subroutine set_up()
+        A = reshape((/1, 2, 3, 4, 5, 6, 7, 8, 9/), (/3,3/))
+
+    end subroutine
+
+    @test
+    subroutine assert_toVoigt2nd_nonSym()
+        real(kind=dp), dimension(9) :: expected_result
+
+        expected_result = (/1, 4, 7, 2, 5, 8, 3, 6, 9/)
+
+        @assertEqual(expected_result, toVoigtNonSym(A))
+    end subroutine assert_toVoigt2nd_nonSym
+
+    @test
+    subroutine assert_toVoigt2nd()
+        real(kind=dp), dimension(6) :: expected_result
+
+        expected_result = (/1, 5, 9, 4, 8, 7/)
+
+        @assertEqual(expected_result, toVoigt(A))
+    end subroutine assert_toVoigt2nd
+
+end module test_voigt
