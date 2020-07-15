@@ -32,7 +32,7 @@ mkdir build
 within the directory you cloned TensorTools into. Next run Cmake to configure the build files, i.e.
 ```
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/path/to/install/dir ..
+cmake -DCMAKE_INSTALL_PREFIX=<path/to/install/dir> ..
 ```
 Here, you have to specify the installation path explicitly. If you did not specify the path, the executable will be build into the build directory you just created. 
 
@@ -48,7 +48,7 @@ Some examples on how to use the TensorTools library in your project, are given a
 ## Testing
 If you want to run the tests for this framework, let CMake generate your build files and compile everything using
 ```
-cmake -DLIBTT_TEST=ON ..
+cmake -DLIBTT_TEST=ON -DCMAKE_PREFIX_PATH=<path/to/pfunit/install/dir> ..
 make
 ```
 Now you can run the tests by calling
@@ -67,6 +67,9 @@ Now you can create the documentation by calling
 make docs
 ```
 from the build directory.
+
+## Versioning
+We use [SemVer](http://semver.org/) for versioning.
 
 ## Contributing
 If you wish to contribute to this project, feel free to report issues on GitHub or to even fork and open a pull request.
