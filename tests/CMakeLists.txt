@@ -14,6 +14,11 @@ add_pfunit_ctest (libtt_tensors_physics_testSuite
 )
 
 add_pfunit_ctest (libtt_products_testSuite
-    TEST_SOURCES test_products_doubleContract.pf
+    TEST_SOURCES test_products_doubleContract.pf test_products_dyadic.pf
+    LINK_LIBRARIES tensortools
+)
+
+add_pfunit_ctest (libtt_voigt_testSuite
+    TEST_SOURCES test_voigt.pf
     LINK_LIBRARIES tensortools
 )
