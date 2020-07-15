@@ -50,7 +50,7 @@ contains
 
         do i = 1,3,1
             call print_subsetinfo((/i/), 3)
-            call print_matrix(a(:,:,i))
+            call print_matrix(a(i,:,:))
         end do
 
     end subroutine print3rd
@@ -65,7 +65,7 @@ contains
         do i = 1,3,1
             do j = 1,3,1
                 call print_subsetinfo((/i, j/), 4)
-                call print_matrix(a(:,:,i,j))
+                call print_matrix(a(i,j,:,:))
             end do
         end do
 
@@ -112,9 +112,9 @@ contains
 
         select case(rank)
             case (3)
-                write(*,'(/, 3X, A, I1, A)') "Dimension (:,:,", subset(1), "):"
+                write(*,'(/, 3X, A, I1, A)') "Dimension (", subset(1), ",:,:):"
             case (4)
-                write(*,'(/, 3X, A, I1, A, I1, A)') "Dimension (:,:,", subset(1), ",", subset(2), "):"
+                write(*,'(/, 3X, A, I1, A, I1, A)') "Dimension (", subset(1), ",", subset(2), ",:,:):"
         end select
 
     end subroutine print_subsetinfo

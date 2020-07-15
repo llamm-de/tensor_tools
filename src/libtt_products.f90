@@ -8,6 +8,7 @@ module libtt_products
 
     public :: doubleContract
     public :: operator(.ddot.)
+    public :: dyad
     
     !> Double contracting (inner) product A:B for tensors of various
     !! ranks. 
@@ -24,6 +25,14 @@ module libtt_products
         module procedure double_contract_ranks24    
         module procedure double_contract_ranks42 
     end interface doubleContract
+
+    !> Dyadic product of tensors A and B
+    interface dyad
+        module procedure dyadic_ranks11
+        module procedure dyadic_ranks12
+        module procedure dyadic_ranks21
+        module procedure dyadic_ranks22
+    end interface dyad
 
 contains
 
@@ -88,5 +97,85 @@ contains
             end do
         end do
     end function double_contract_ranks42
+
+    pure function dyadic_ranks11(a, b) result(res)
+        real(kind=dp), dimension(3), intent(in) :: a
+        real(kind=dp), dimension(3), intent(in) :: b
+        real(kind=dp), dimension(3,3)           :: res
+        integer                                 :: i
+        integer                                 :: j
+
+        res = 0.0d0
+
+        do i = 1,3,1
+            do j = 1,3,1
+                res(i,j) = res(i,j) + a(i)*b(j)
+            end do
+        end do
+
+    end function dyadic_ranks11
+
+    pure function dyadic_ranks12(a, b) result(res)
+        real(kind=dp), dimension(3), intent(in)   :: a
+        real(kind=dp), dimension(3,3), intent(in) :: b
+        real(kind=dp), dimension(3,3,3)           :: res
+        integer                                   :: i
+        integer                                   :: j
+        integer                                   :: k
+
+        res = 0.0d0
+
+        do i = 1,3,1
+            do j = 1,3,1
+                do k = 1,3,1
+                    res(i,j,k) = res(i,j,k) + a(i)*b(j,k)
+                end do
+            end do
+        end do
+
+    end function dyadic_ranks12
+
+    pure function dyadic_ranks21(a, b) result(res)
+        real(kind=dp), dimension(3,3), intent(in) :: a
+        real(kind=dp), dimension(3), intent(in)   :: b
+        real(kind=dp), dimension(3,3,3)           :: res
+        integer                                   :: i
+        integer                                   :: j
+        integer                                   :: k
+
+        res = 0.0d0
+
+        do i = 1,3,1
+            do j = 1,3,1
+                do k = 1,3,1
+                    res(i,j,k) = res(i,j,k) + a(i,j)*b(k)
+                end do
+            end do
+        end do
+
+    end function dyadic_ranks21
+
+    pure function dyadic_ranks22(a, b) result(res)
+        real(kind=dp), dimension(3,3), intent(in) :: a
+        real(kind=dp), dimension(3,3), intent(in) :: b
+        real(kind=dp), dimension(3,3,3,3)         :: res
+        integer                                   :: i
+        integer                                   :: j
+        integer                                   :: k
+        integer                                   :: l
+
+        res = 0.0d0
+
+        do i = 1,3,1
+            do j = 1,3,1
+                do k = 1,3,1
+                    do l = 1,3,1
+                        res(i,j,k,l) = res(i,j,k,l) + a(i,j)*b(k,l)
+                    end do
+                end do
+            end do
+        end do
+
+    end function dyadic_ranks22
 
 end module libtt_products
