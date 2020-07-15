@@ -98,6 +98,10 @@ contains
         end do
     end function double_contract_ranks42
 
+    !> Dyadic product of tensors of rank 1
+    !! @param a    Rank 1 tensor
+    !! @param b    Rank 1 tensor
+    !! @return res Rank 2 tensor
     pure function dyadic_ranks11(a, b) result(res)
         real(kind=dp), dimension(3), intent(in) :: a
         real(kind=dp), dimension(3), intent(in) :: b
@@ -115,6 +119,10 @@ contains
 
     end function dyadic_ranks11
 
+    !> Dyadic product of tensors of rank 1 and 2
+    !! @param a    Rank 1 tensor
+    !! @param b    Rank 2 tensor
+    !! @return res Rank 3 tensor
     pure function dyadic_ranks12(a, b) result(res)
         real(kind=dp), dimension(3), intent(in)   :: a
         real(kind=dp), dimension(3,3), intent(in) :: b
@@ -135,6 +143,10 @@ contains
 
     end function dyadic_ranks12
 
+    !> Dyadic product of tensors of rank 2 and 1
+    !! @param a    Rank 2 tensor
+    !! @param b    Rank 1 tensor
+    !! @return res Rank 3 tensor
     pure function dyadic_ranks21(a, b) result(res)
         real(kind=dp), dimension(3,3), intent(in) :: a
         real(kind=dp), dimension(3), intent(in)   :: b
@@ -155,6 +167,10 @@ contains
 
     end function dyadic_ranks21
 
+    !> Dyadic product of tensors of rank 2
+    !! @param a    Rank 2 tensor
+    !! @param b    Rank 2 tensor
+    !! @return res Rank 4 tensor
     pure function dyadic_ranks22(a, b) result(res)
         real(kind=dp), dimension(3,3), intent(in) :: a
         real(kind=dp), dimension(3,3), intent(in) :: b
