@@ -14,8 +14,9 @@ set(SOURCE  libtt_exception.f90
             libtt_precision.f90
             libtt_print.f90
             libtt_voigt.f90
+            libtt_solvers_gauss.f90
             )
 
 # Define library to build
-add_library(tensortools STATIC ${SOURCE})
+add_library(tensortools ${SOURCE})
 target_include_directories(tensortools PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
