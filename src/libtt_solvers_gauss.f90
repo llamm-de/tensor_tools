@@ -2,23 +2,25 @@
 module libtt_solvers_gauss
     
     use libtt_precision, only: dp
-    use libtt_print
 
     implicit none
     private 
 
     public :: gauss 
 
+    !> Interface for Gaussian elimination algorithm with partial pivoting
     interface gauss
         module procedure gauss_linSys
         module procedure gauss_matrix
     end interface gauss
 
+    !> Interface to forward elimination in gaussian algorithm
     interface eliminateForward
         module procedure eliminateForward_linSys
         module procedure eliminateForward_matrix
     end interface eliminateForward
 
+    !> Interface to row switching function for vectors and matrices
     interface switchRow
         module procedure switchRow_rank1
         module procedure switchRow_rank2
@@ -26,6 +28,12 @@ module libtt_solvers_gauss
 
 contains
 
+    !> Gaussian elimination to solve nxn linear system of equations A*x=b
+    !! This routine return an upper triangular matrix as a and the solution
+    !! vector as b.
+    !!
+    !! @param a System matrix
+    !! @param b Right hand side vector
     subroutine gauss_linSys(a,b)
         real(kind=dp), dimension(:,:), intent(inout) :: a   ! System matrix
         real(kind=dp), dimension(:),   intent(inout) :: b   ! Right hand side vector
@@ -35,7 +43,10 @@ contains
 
     end subroutine gauss_linSys
 
-
+    !> Gaussian elimination for nxn matrix
+    !! This routine return an upper triangular matrix as a.
+    !!
+    !! @param a System matrix
     subroutine gauss_matrix(a)
         real(kind=dp), dimension(:,:), intent(inout) :: a   ! System matrix
 
