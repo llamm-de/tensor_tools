@@ -91,6 +91,8 @@ contains
                 call switchRow(b, (/j, index/))
             end if
 
+            call check_zero_pivot(a, j)
+
             do i = (j+1),n,1
                 fac    = a(i,j)/a(j,j)
                 a(i,:) = a(i,:) - a(j,:)* fac
@@ -119,6 +121,8 @@ contains
                 call switchRow(a, (/j, index/))
             end if
 
+            call check_zero_pivot(a, j)
+
             do i = (j+1),n,1
                 fac    = a(i,j)/a(j,j)
                 a(i,:) = a(i,:) - a(j,:)* fac
@@ -128,13 +132,27 @@ contains
     end subroutine eliminateForward_matrix
 
 
+    subroutine check_zero_pivot(a, j)
+        real(kind=8), dimension(:,:), intent(in) :: a
+        integer, intent(in)                      :: j
+
+        if (a(j,j) == 0) then
+            write(*,'(A, I3, A, I3, A)') "Zero pivot element at (", j, ",", j, ")!"
+            write(*,'(A)') "Matrix might be inaccurate!"
+            write(*,'(A)') "Process terminated!"
+            error stop
+        end if
+
+    end subroutine check_zero_pivot
+
+
     subroutine getScalingFactors(a, res)
         real(kind=dp), dimension(:,:), intent(in) :: a
         real(kind=dp), dimension(:), intent(out)  :: res
         integer                                   :: i
 
         do i = 1,size(a,1),1
-            res(i) = maxval(a(i,:),1)
+            res(i) = maxval(abs(a(i,:)),1)
         end do
 
     end subroutine getScalingFactors
