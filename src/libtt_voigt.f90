@@ -1,7 +1,7 @@
 module libtt_voigt
     
-    use libtt_precision,      only: dp
-    use libtt_tensors_common, only: symmetric
+    use libtt_precision, only: dp
+    use libtt_common,    only: symmetric
 
     implicit none
     private
