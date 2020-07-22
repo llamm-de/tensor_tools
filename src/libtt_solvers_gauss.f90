@@ -54,7 +54,10 @@ contains
 
     end subroutine gauss_matrix
     
-
+    !> Backward substitution to solve system of equations
+    !!
+    !! @param a System matrix
+    !! @param b Right-hand side
     subroutine substituteBackward(a, b)
         real(kind=dp), dimension(:,:), intent(inout) :: a   ! System matrix
         real(kind=dp), dimension(:),   intent(inout) :: b   ! Right hand side vector
@@ -70,7 +73,10 @@ contains
 
     end subroutine substituteBackward
 
-
+    !> Forward elimination for linear system using scaled partial pivoting
+    !!
+    !! @param a System matrix
+    !! @param b Right-hand side
     subroutine eliminateForward_linSys(a, b)
         real(kind=dp), dimension(:,:), intent(inout) :: a     ! System matrix
         real(kind=dp), dimension(:),   intent(inout) :: b     ! Right hand side vector
@@ -102,7 +108,10 @@ contains
 
     end subroutine eliminateForward_linSys
 
-
+    !> Forward elimination for a single martrix using scaled partial pivoting
+    !!
+    !! @param a System matrix
+    !! @param b Right-hand side
     subroutine eliminateForward_matrix(a)
         real(kind=dp), dimension(:,:), intent(inout) :: a   ! System matrix      
         integer                                      :: n   ! Number of rows/columns
@@ -131,7 +140,7 @@ contains
 
     end subroutine eliminateForward_matrix
 
-
+    !> Zero pivoting error function
     subroutine check_zero_pivot(a, j)
         real(kind=8), dimension(:,:), intent(in) :: a
         integer, intent(in)                      :: j
@@ -145,7 +154,10 @@ contains
 
     end subroutine check_zero_pivot
 
-
+    !> Scaling factors for scaled partial pivoting
+    !!
+    !! @param a   System matrix
+    !! @param res Array of scaling factors
     subroutine getScalingFactors(a, res)
         real(kind=dp), dimension(:,:), intent(in) :: a
         real(kind=dp), dimension(:), intent(out)  :: res
@@ -157,7 +169,10 @@ contains
 
     end subroutine getScalingFactors
 
-
+    !> Switching of rows in vector
+    !!
+    !! @param a    Vector
+    !! @param rows Array containing indices of rows to switch
     subroutine switchRow_rank1(a, rows)
         real(kind=dp), dimension(:), intent(inout) :: a
         integer, dimension(2), intent(in)          :: rows
@@ -169,7 +184,10 @@ contains
 
     end subroutine switchRow_rank1
 
-
+    !> Switching of rows in matrix
+    !!
+    !! @param a    System matrix
+    !! @param rows Array containing indices of rows to switch
     subroutine switchRow_rank2(a, rows)
         real(kind=dp), dimension(:,:), intent(inout) :: a
         integer, dimension(2), intent(in)            :: rows
