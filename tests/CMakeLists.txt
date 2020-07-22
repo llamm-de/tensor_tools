@@ -3,8 +3,8 @@ add_pfunit_ctest (libtt_common_testSuite
     LINK_LIBRARIES tensortools
 )
 
-add_pfunit_ctest (libtt_tensors_physics_testSuite
-    TEST_SOURCES test_tensors_physics.pf
+add_pfunit_ctest (libtt_physics_testSuite
+    TEST_SOURCES test_physics_elasticity.pf
     LINK_LIBRARIES tensortools
 )
 

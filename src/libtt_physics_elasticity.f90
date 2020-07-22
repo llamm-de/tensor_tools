@@ -1,5 +1,5 @@
 !> Module for special tensors used in pyhsical simulations (e.g. solid mechanics)
-module libtt_tensors_physics
+module libtt_physics_elasticity
 
     use libtt_precision
     use libtt_common,   only: eye
@@ -52,4 +52,4 @@ contains
 
     end function getGreenLagrange
 
-end module libtt_tensors_physics
+end module libtt_physics_elasticity

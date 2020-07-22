@@ -1,7 +1,7 @@
-module test_tensors_physics
+module test_physics_elasticity
     use funit
     use libtt_precision
-    use libtt_tensors_physics
+    use libtt_physics_elasticity
 
     implicit none
 
@@ -50,4 +50,4 @@ contains
         @assertEqual(expected_result, getGreenLagrange(defGrad))
     end subroutine assert_greenLagrange
 
-end module test_tensors_physics
+end module test_physics_elasticity
