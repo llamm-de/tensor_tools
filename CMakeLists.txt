@@ -12,6 +12,16 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
 endif()
 
 #----------------------------------------------------------------------#
+# Set default installation directory
+#----------------------------------------------------------------------#
+#if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+#    set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "default install path" FORCE)
+#    message(STATUS "LIBTT: Setting default install prefix to ${CMAKE_INSTALL_PREFIX} \n
+#                      Override with -DCMAKE_INSTALL_PREFIX=<path>.")
+#endif()
+
+
+#----------------------------------------------------------------------#
 # Set default build type to debug
 #----------------------------------------------------------------------#
 if(NOT DEFINED CMAKE_BUILD_TYPE)
@@ -58,6 +68,7 @@ if(LIBTT_TESTS)
     find_package(PFUNIT REQUIRED)
     enable_testing()
     add_subdirectory(tests)
+    message(STATUS "LIBTT: Tests enabled \n   Override with -DLIBTT_TESTS=OFF")
 endif()
 
 #----------------------------------------------------------------------#
@@ -70,7 +81,13 @@ if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) AND LIBTT_DOCS)
     find_package(Doxygen)
     if(Doxygen_FOUND)
         add_subdirectory(docs)
+        message(STATUS "LIBTT: Documentation enabled \n   Override with -DLIBTT_DOCS=OFF")
     else()
-        message(STATUS "Doxygen not found, not building docs")
+        message(STATUS "LIBTT: Doxygen not found, not building docs")
     endif()
 endif()
+
+#----------------------------------------------------------------------#
+# Installation
+#----------------------------------------------------------------------#
+#install(FILES)

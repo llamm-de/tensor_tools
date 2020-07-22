@@ -9,6 +9,7 @@ module libtt_products
     public :: doubleContract
     public :: operator(.ddot.)
     public :: dyad
+    public :: operator(.dyad.)
     
     !> Double contracting (inner) product A:B for tensors of various
     !! ranks. 
@@ -26,6 +27,14 @@ module libtt_products
         module procedure double_contract_ranks42 
     end interface doubleContract
 
+    !> Dyadic product of tensors A and B
+    interface operator(.dyad.)
+        module procedure dyadic_ranks11
+        module procedure dyadic_ranks12
+        module procedure dyadic_ranks21
+        module procedure dyadic_ranks22
+    end interface 
+    
     !> Dyadic product of tensors A and B
     interface dyad
         module procedure dyadic_ranks11

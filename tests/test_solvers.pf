@@ -1,0 +1,38 @@
+module test_solvers
+    use funit
+    use libtt_precision    , only: dp
+    use libtt_solvers_gauss, only: gauss
+
+    implicit none
+
+    real(kind=dp), dimension(3,3) :: A
+    real(kind=dp), dimension(3)   :: b
+
+contains
+
+    @before
+    subroutine set_up()
+        b = (/3, 3, 10/)
+        A = reshape((/1, 3, 2, 2, 4, 10, 1, 0, 4/),&
+                    (/3,3/))
+    end subroutine set_up
+
+    @test
+    subroutine assert_gauss_result()
+
+        call gauss(A, b)
+        @assertEqual((/1, 0, 2/), b)
+
+    end subroutine assert_gauss_result
+
+    @test
+    subroutine assert_gauss_matrix()
+        real(kind=dp), dimension(3,3) :: expected_result
+
+        expected_result = reshape((/3.0, 0.0, 0.0, 4.0, 22.0/3.0, 0.0, 0.0, 4.0, 7.0/11.0/),(/3,3/))
+        call gauss(A)
+        @assertEqual(expected_result, A, tolerance=1.0d-5)
+
+    end subroutine assert_gauss_matrix
+
+end module test_solvers

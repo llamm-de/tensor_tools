@@ -40,7 +40,7 @@ contains
     pure function trace(a) result(res)
         real(kind=dp), dimension (:,:), intent(in) :: a
         real(kind=dp)                              :: res
-        integer                                   :: i
+        integer                                    :: i
 
         res = 0.0d0
 
