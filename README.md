@@ -38,12 +38,9 @@ Here, you have to specify the installation path explicitly. If you did not speci
 
 Finally you can compile and install TensorTools by calling
 ```
-make install
+make
 ```
 Congratulations, now you should be able to include the installed library into your projects.
-
-## Examples
-Some examples on how to use the TensorTools library in your project, are given as individual programs within the ```examples``` directory. Please notice, that these examples are not covered by test.
 
 ## Testing
 If you want to run the tests for this framework, let CMake generate your build files and compile everything using
