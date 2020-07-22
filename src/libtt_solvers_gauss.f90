@@ -78,23 +78,28 @@ contains
     !! @param a System matrix
     !! @param b Right-hand side
     subroutine eliminateForward_linSys(a, b)
-        real(kind=dp), dimension(:,:), intent(inout) :: a     ! System matrix
-        real(kind=dp), dimension(:),   intent(inout) :: b     ! Right hand side vector
-        integer                                      :: n     ! Number of rows/columns
-        integer                                      :: i     ! Row iterator
-        integer                                      :: j     ! Column iterator
-        integer                                      :: index ! Column iterator
-        real(kind=dp)                                :: fac   ! Multiplication factor for elimination
+        real(kind=dp), dimension(:,:), intent(inout) :: a      ! System matrix
+        real(kind=dp), dimension(:),   intent(inout) :: b      ! Right hand side vector
+        integer                                      :: n      ! Number of rows/columns
+        integer                                      :: i      ! Row iterator
+        integer                                      :: j      ! Column iterator
+        integer                                      :: index  ! Column iterator
+        real(kind=dp)                                :: fac    ! Multiplication factor for elimination
+        real(kind=dp), dimension(:), allocatable     :: scales ! Scaling factors
 
         n = size(a,1)
+        allocate(scales(n))
+        call getScalingFactors(a, scales)
 
         do j = 1,(n-1),1
 
             ! Search for pivot and switch rows
-            index = maxloc(a(j:n,j),1)
+            index = maxloc(abs(a(j:n,j)/scales(j:n)),1)
+            index = index + j - 1
             if (index /= j) then 
                 call switchRow(a, (/j, index/))
                 call switchRow(b, (/j, index/))
+                call switchRow(scales, (/j, index/))
             end if
 
             call check_zero_pivot(a, j)
@@ -106,6 +111,8 @@ contains
             end do
         end do  
 
+        deallocate(scales)
+
     end subroutine eliminateForward_linSys
 
     !> Forward elimination for a single martrix using scaled partial pivoting
@@ -113,19 +120,23 @@ contains
     !! @param a System matrix
     !! @param b Right-hand side
     subroutine eliminateForward_matrix(a)
-        real(kind=dp), dimension(:,:), intent(inout) :: a   ! System matrix      
-        integer                                      :: n   ! Number of rows/columns
-        integer                                      :: i   ! Row iterator
-        integer                                      :: j   ! Column iterator
-        integer                                      :: index ! Column iterator
-        real(kind=dp)                                :: fac ! Multiplication factor for elimination
+        real(kind=dp), dimension(:,:), intent(inout) :: a      ! System matrix      
+        integer                                      :: n      ! Number of rows/columns
+        integer                                      :: i      ! Row iterator
+        integer                                      :: j      ! Column iterator
+        integer                                      :: index  ! Column iterator
+        real(kind=dp)                                :: fac    ! Multiplication factor for elimination
+        real(kind=dp), dimension(:), allocatable     :: scales ! Scaling factors
 
         n = size(a,1)
+        allocate(scales(n))
+        call getScalingFactors(a, scales)
 
         do j = 1,(n-1),1
             
             ! Search for pivot and switch rows
-            index = maxloc(a(j:n,j),1)
+            index = maxloc(abs(a(j:n,j)/scales(j:n)),1)
+            index = index + j - 1
             if (index /= j) then 
                 call switchRow(a, (/j, index/))
             end if
@@ -137,6 +148,8 @@ contains
                 a(i,:) = a(i,:) - a(j,:)* fac
             end do
         end do  
+
+        deallocate(scales)
 
     end subroutine eliminateForward_matrix
 
