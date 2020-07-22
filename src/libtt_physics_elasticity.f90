@@ -2,7 +2,7 @@
 module libtt_physics_elasticity
 
     use libtt_precision
-    use libtt_common,   only: eye, inverse, det
+    use libtt_common,   only: eye, inverse, det, trace
     use libtt_products, only: dyad
     
     implicit none
@@ -13,6 +13,9 @@ module libtt_physics_elasticity
     public :: getGreenLagrange
     public :: getNeoHooke_stress
     public :: getNeoHooke_tangent
+    public :: getDerivativeInvRCG
+    public :: getStVenant_stress
+    public :: getStVenant_tangent
     
     
 contains
@@ -45,14 +48,14 @@ contains
 
     !> Green Lagrange strain tensor
     !!
-    !! @param  defGrad Deformation gradient tensor
-    !! @return res     Green Lagrange strain tensor
-    pure function getGreenLagrange(defGrad) result(res)
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @return res              Green Lagrange strain tensor
+    function getGreenLagrange(rightCauchyGreen) result(res)
 
-        real(kind=dp), dimension(3,3), intent(in) :: defGrad
+        real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen   
         real(kind=dp), dimension(3,3)             :: res
 
-        res = 0.5d0*(getRightCauchyGreen(defGrad) - eye())
+        res = 0.5d0*(RightCauchyGreen - eye())
 
     end function getGreenLagrange
 
@@ -65,7 +68,7 @@ contains
     !! @param  mu               Material Parameter (Lame mu)
     !! @param  lambda           Material Parameter (Lame lambda)
     !! @return res              2nd Piola Kirchhoff stress tensor
-    pure function getNeoHooke_stress(rightCauchyGreen, mu, lambda) result(res)
+    function getNeoHooke_stress(rightCauchyGreen, mu, lambda) result(res)
         real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
         real(kind=dp)                , intent(in) :: mu
         real(kind=dp)                , intent(in) :: lambda
@@ -135,5 +138,39 @@ contains
         res = 0.5*res
 
     end function getDerivativeInvRCG
+
+    !> St.Venant Kirchhoff material model (stress response)
+    !!
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @param  mu               Material Parameter (Lame mu)
+    !! @param  lambda           Material Parameter (Lame lambda)
+    !! @return res              2nd Piola Kirchhoff stress tensor
+    function getStVenant_stress(rightCauchyGreen, mu, lambda) result(res)
+        real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
+        real(kind=dp)                , intent(in) :: mu
+        real(kind=dp)                , intent(in) :: lambda
+        real(kind=dp), dimension(3,3)             :: res
+        real(kind=dp), dimension(3,3)             :: greenStrain
+
+        greenStrain = getGreenLagrange(rightCauchyGreen)
+
+        res = lambda * trace(greenStrain) * eye() + 2 * mu * greenStrain
+
+    end function getStVenant_stress
+
+    !> St.Venant Kirchhoff material model (stress response)
+    !!
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @param  mu               Material Parameter (Lame mu)
+    !! @param  lambda           Material Parameter (Lame lambda)
+    !! @return res              4th order material tangent modulus (ref. config.)
+    function getStVenant_tangent(mu, lambda) result(res)
+        real(kind=dp)                , intent(in) :: mu
+        real(kind=dp)                , intent(in) :: lambda
+        real(kind=dp), dimension(3,3,3,3)         :: res
+
+        res = lambda * dyad(eye(), eye()) + 2 * mu * eye(4)
+
+    end function getStVenant_tangent
 
 end module libtt_physics_elasticity

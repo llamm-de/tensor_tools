@@ -23,6 +23,11 @@ module libtt_common
         module procedure makeDiagonalTensor
     end interface diag
 
+    interface eye
+        module procedure eye_2
+        module procedure eye_4
+    end interface eye
+
     
 contains
 
@@ -81,7 +86,7 @@ contains
     !> Identity tensor of 2nd order
     !! 
     !! @return res Identity tensor of 2nd order
-    pure function eye() result(res)
+    function eye_2() result(res)
         real(kind=dp), dimension(3,3) :: res
 
         res      = 0.0d0
@@ -89,7 +94,36 @@ contains
         res(2,2) = 1.0d0
         res(3,3) = 1.0d0
 
-    end function eye
+    end function eye_2
+
+    !> Identity tensor of higher rank than 4
+    !! 
+    !! @return res Identity tensor of higher rank
+    function eye_4(rank) result(res)
+        integer, intent(in)               :: rank
+        real(kind=dp), dimension(3,3,3,3) :: res
+        integer                           :: i
+        integer                           :: j
+        integer                           :: k
+        integer                           :: l
+
+        if (rank == 4) then
+            do i =1,3,1
+                do j = 1,3,1
+                    do k = 1,3,1
+                        do l = 1,3,1
+                            res(i,j,k,l) = res(i,j,k,l) + &
+                                           0.5*(kronecker(i,k)*kronecker(j,l) + kronecker(i,l)*kronecker(j,k))
+                        end do
+                    end do
+                end do
+            end do
+        else
+            write(*,*) "ERROR in function Eye(): Input of rank ", rank, " not supported yet!" 
+            error stop
+        end if
+
+    end function eye_4
 
     !> Symmetric part of 2nd order tensor
     !! 
@@ -166,7 +200,7 @@ contains
     !!
     !! @param  A   2nd order tensor
     !! @return res Deviatoric part of A
-    pure function dev(A) result(res)
+    function dev(A) result(res)
         real(kind=dp), dimension(3,3), intent(in)  :: A
         real(kind=dp), dimension(3,3)              :: res
 
