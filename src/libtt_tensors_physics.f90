@@ -2,8 +2,8 @@
 module libtt_tensors_physics
 
     use libtt_precision
-    use libtt_tensors_common
-
+    use libtt_common,   only: eye
+    
     implicit none
     private
 

@@ -10,7 +10,6 @@ set(SOURCE  libtt_exception.f90
             libtt_common.f90
             libtt_products.f90
             libtt_tensors_physics.f90
-            libtt_tensors_common.f90
             libtt_precision.f90
             libtt_print.f90
             libtt_voigt.f90

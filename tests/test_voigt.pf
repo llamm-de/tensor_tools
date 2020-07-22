@@ -1,9 +1,9 @@
 module test_voigt
     use funit
-    use libtt_precision,      only: dp
-    use libtt_tensors_common, only: symmetric
-    use libtt_voigt,          only: toVoigt, toVoigtNonSym, &
-                                    toTensor, toTensorNonSym
+    use libtt_precision, only: dp
+    use libtt_common,    only: symmetric
+    use libtt_voigt,     only: toVoigt, toVoigtNonSym, &
+                               toTensor, toTensorNonSym
 
     implicit none
 

@@ -7,7 +7,6 @@ module libtt
     use libtt_print
     use libtt_products
     use libtt_solvers_gauss
-    use libtt_tensors_common
     use libtt_tensors_physics
     use libtt_voigt
     

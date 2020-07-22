@@ -1,10 +1,5 @@
 add_pfunit_ctest (libtt_common_testSuite
-    TEST_SOURCES test_common.pf
-    LINK_LIBRARIES tensortools
-)
-
-add_pfunit_ctest (libtt_tensors_common_testSuite
-    TEST_SOURCES test_tensors_common.pf
+    TEST_SOURCES test_common.pf test_tensors_common.pf
     LINK_LIBRARIES tensortools
 )
 
