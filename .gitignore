@@ -2,3 +2,4 @@
 *.mod
 /misc
 *.out
+/.vscode
