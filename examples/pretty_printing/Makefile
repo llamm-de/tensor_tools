@@ -14,5 +14,7 @@ libtt_print.mod: $(SRCROOT)/libtt_print.f90 libtt_precision.mod
 libtt_precision.mod: $(SRCROOT)/libtt_precision.f90
 	$(FC) $(MODFLAGS) $(SRCROOT)/libtt_precision.f90
 
+.PHONY: clean
+
 clean:
 	rm pretty_print *.mod *.o
