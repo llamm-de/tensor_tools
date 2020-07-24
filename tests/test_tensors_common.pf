@@ -40,21 +40,21 @@ contains
 
 
     @test
-    subroutine assert_scew()
+    subroutine assert_skew()
 
         expected_result = reshape((/0, -1, -2, 1, 0, -1, 2, 1, 0/),&
                                    (/3,3/))
 
-        @assertEqual(expected_result, scew(A))
-    end subroutine assert_scew
+        @assertEqual(expected_result, skew(A))
+    end subroutine assert_skew
 
 
     @test
-    subroutine assert_scewPlusSymmetric()
+    subroutine assert_skewPlusSymmetric()
 
         expected_result = A
-        @assertEqual(expected_result, scew(A)+symmetric(A))
-    end subroutine assert_scewPlusSymmetric
+        @assertEqual(expected_result, skew(A)+symmetric(A))
+    end subroutine assert_skewPlusSymmetric
 
 
     @test
