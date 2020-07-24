@@ -27,7 +27,6 @@ contains
 
     subroutine print1st(a)
         real(kind=dp), dimension(3), intent(in) :: a
-        integer                                 :: i
 
         call print_tensorInfo(1)
         call print_vector(a)

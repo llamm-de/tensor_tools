@@ -43,11 +43,14 @@ contains
     @test
     subroutine assert_greenLagrange()
         real(kind=dp), dimension(3,3) :: expected_result
+        real(kind=dp), dimension(3,3) :: rightCauchyGreen
 
         expected_result = 0.5 * reshape((/13, 32, 50, 32, 76, 122, 50, 122, 193/),&
                                   (/3,3/))
+
+        rightCauchyGreen = getRightCauchyGreen(defGrad)
         
-        @assertEqual(expected_result, getGreenLagrange(defGrad))
+        @assertEqual(expected_result, getGreenLagrange(rightCauchyGreen))
     end subroutine assert_greenLagrange
 
 end module test_physics_elasticity

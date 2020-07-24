@@ -15,6 +15,7 @@ set(SOURCE  libtt.f90
             libtt_print.f90
             libtt_voigt.f90
             libtt_solvers_gauss.f90
+            libtt_solvers_eigenproblem.f90
             )
 
 # Define library to build

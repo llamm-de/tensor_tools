@@ -1,7 +1,8 @@
 module test_solvers
     use funit
-    use libtt_precision    , only: dp
-    use libtt_solvers_gauss, only: gauss
+    use libtt_precision    ,        only: dp
+    use libtt_solvers_gauss,        only: gauss
+    use libtt_solvers_eigenproblem, only: powerMethod
 
     implicit none
 
@@ -34,5 +35,29 @@ contains
         @assertEqual(expected_result, A, tolerance=1.0d-5)
 
     end subroutine assert_gauss_matrix
+
+    @test
+    subroutine assert_powerMethod_vector()
+        real(kind=dp), dimension(3) :: expected_result
+        real(kind=dp)               :: eigVal
+
+        expected_result = (/0.23570226, 0.23570226, 0.94280904/)
+        b = (/1,1,1/)
+        call powerMethod(A, b, eigVal)
+
+        @assertEqual(expected_result, b, tolerance=1.0d-5)
+    end subroutine assert_powerMethod_vector
+
+    @test
+    subroutine assert_powerMethod_value()
+        real(kind=dp) :: expected_result
+        real(kind=dp) :: eigVal
+
+        expected_result = 7.0d0
+        b = (/1,1,1/)
+        call powerMethod(A, b, eigVal)
+
+        @assertEqual(expected_result, eigVal, tolerance=1.0d-5)
+    end subroutine assert_powerMethod_value
 
 end module test_solvers
