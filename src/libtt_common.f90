@@ -13,7 +13,7 @@ module libtt_common
     public :: det
     public :: eye
     public :: symmetric
-    public :: scew
+    public :: skew
     public :: inverse
     public :: diag
     public :: dev
@@ -141,13 +141,13 @@ contains
     !! 
     !! @param  A   Tensor of second order
     !! @return res Scew symmetric part of A
-    pure function scew(A) result(res)
+    pure function skew(A) result(res)
         real(kind=dp), dimension(3,3), intent(in) :: A
         real(kind=dp), dimension(3,3)             :: res
 
         res = 0.5d0 * (A - transpose(A))
 
-    end function scew
+    end function skew
 
     !> Inverse of 2nd order tensor
     !! 
