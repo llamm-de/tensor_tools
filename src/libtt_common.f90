@@ -16,6 +16,7 @@ module libtt_common
     public :: inverse
     public :: diag
     public :: dev
+    public :: invariants
 
     interface diag
         module procedure getDiagElementsFromTensor
@@ -206,5 +207,19 @@ contains
         res = A - trace(A)/3 * eye()
 
     end function dev
+
+    !> Get invariants of 2nd order tensor
+    !!
+    !! @param  A   Second order tensor
+    !! @return res Array of invariants
+    pure function invariants(A) result(res)
+        real(kind=dp), dimension(3,3), intent(in) :: A
+        real(kind=dp), dimension(3)               :: res
+
+        res(1) = trace(A)
+        res(2) = 0.5 * (trace(A)**2 - trace(matmul(A,A)))
+        res(3) = det(A)
+
+    end function invariants
 
 end module libtt_common

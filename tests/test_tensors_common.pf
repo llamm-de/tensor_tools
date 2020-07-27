@@ -99,4 +99,12 @@ contains
         @assertEqual(B, dev(A))
     end subroutine assert_dev
 
+    @test
+    subroutine assert_invariants()
+        real(kind=dp), dimension(3) :: expected_result
+
+        expected_result = (/15.0, -18.0, 0.0/)
+        @assertEqual(expected_result, invariants(A))
+    end subroutine assert_invariants
+
 end module test_tensors_common
