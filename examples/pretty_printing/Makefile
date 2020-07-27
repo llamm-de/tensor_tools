@@ -1,7 +1,7 @@
 FC=gfortran
 #FC=ifort
 
-FLAGS=-Wall -o pretty_print
+FLAGS=-Wall -o pretty_print.out
 MODFLAGS=-Wall -c
 SRCROOT=../../src
 
@@ -17,4 +17,4 @@ libtt_precision.mod: $(SRCROOT)/libtt_precision.f90
 .PHONY: clean
 
 clean:
-	rm pretty_print *.mod *.o
+	rm pretty_print.out *.mod *.o
