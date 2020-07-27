@@ -26,17 +26,26 @@ contains
     end subroutine print0th
 
     subroutine print1st(a)
-        real(kind=dp), dimension(3), intent(in) :: a
+        real(kind=dp), dimension(:), intent(in) :: a
 
-        call print_tensorInfo(1)
+        if (size(a,1) == 3) then
+            call print_tensorInfo(1)
+        else 
+            call print_matrixInfo(shape(a))
+        end if
+
         call print_vector(a)
 
     end subroutine print1st
 
     subroutine print2nd(a)
-        real(kind=dp), dimension(3,3), intent(in) :: a
+        real(kind=dp), dimension(:,:), intent(in) :: a
 
-        call print_tensorInfo(2)
+        if (size(a,1) == 3 .and. size(a,2) == 3) then
+            call print_tensorInfo(2)
+        else 
+            call print_matrixInfo(shape(a))
+        end if
         call print_matrix(a)
 
     end subroutine print2nd
@@ -97,6 +106,17 @@ contains
         end do
 
     end subroutine print_vector
+
+    subroutine print_matrixInfo(dim)    
+        integer, dimension(:), intent(in) :: dim
+
+        if (size(dim) == 1) then
+            write(*,'(/, A, I1, A)') "Vector of dimension ", dim(1), ":"
+        else
+            write(*,'(/, A, I1, A, I1, A)') "Matrix of dimension ", dim(1), "x", dim(2), ":"
+        end if
+
+    end subroutine print_matrixInfo
 
     subroutine print_tensorInfo(rank)
         integer, intent(in) :: rank
