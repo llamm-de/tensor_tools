@@ -54,6 +54,13 @@ ctest
 ```
 from the build directory.
 
+## Examples
+You can find examples on the functionality of this library within the ```examples``` directory. To run an example, got to the directory of the desired example and run the prepared shell script, e.g.
+```
+./run_example.sh
+```
+This will build and execute the desired example for you.
+
 ## Documentation
 If you want to create a documentation for this framework, let CMake generate your build files and compile everything using
 ```

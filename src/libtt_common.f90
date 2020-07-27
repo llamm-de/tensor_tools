@@ -3,7 +3,6 @@
 module libtt_common
 
     use libtt_precision
-    use libtt_exception, only: throw_exception
 
     implicit none
     private
