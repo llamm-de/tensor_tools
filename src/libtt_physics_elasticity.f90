@@ -190,7 +190,7 @@ contains
         real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
         real(kind=dp), dimension(3)  , intent(in) :: fibreDir
         real(kind=dp)                , intent(in) :: k
-        real(kind=dp)                , intent(in) :: alpha
+        integer                      , intent(in) :: alpha
         real(kind=dp), dimension(3,3)             :: res
         real(kind=dp), dimension(3,3)             :: structuralTensor
         real(kind=dp), dimension(5)               :: invars
@@ -217,7 +217,7 @@ contains
         real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
         real(kind=dp), dimension(3)  , intent(in) :: fibreDir
         real(kind=dp)                , intent(in) :: k
-        real(kind=dp)                , intent(in) :: alpha
+        integer                      , intent(in) :: alpha
         real(kind=dp), dimension(3,3,3,3)         :: res
         real(kind=dp), dimension(3,3)             :: structuralTensor
         real(kind=dp), dimension(5)               :: invars
