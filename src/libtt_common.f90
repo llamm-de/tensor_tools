@@ -14,6 +14,7 @@ module libtt_common
     public :: symmetric
     public :: skew
     public :: inverse
+    public :: inverseMatrix
     public :: diag
     public :: dev
     public :: invariants
@@ -153,6 +154,22 @@ contains
         res = 0.5d0 * (A - transpose(A))
 
     end function skew
+
+    !> Inverse of a 2x2 matrix
+    !!
+    !! @param  A   2x2 Matrix
+    !! @return res Inverse of A
+    pure function inverseMatrix(A) result(res)
+        real(kind=dp), dimension(2,2), intent(in) :: A
+        real(kind=dp), dimension(2,2)             :: res
+
+        res(1,1) = A(2,2) 
+        res(1,2) = -A(1,2)
+        res(2,1) = -A(2,1)
+        res(2,2) = A(1,1)
+        res      = res / (A(1,1)*A(2,2) - A(1,2)*A(2,1))
+
+    end function inverseMatrix
 
     !> Inverse of 2nd order tensor
     !! 
