@@ -28,6 +28,11 @@ module libtt_common
         module procedure eye_4
     end interface eye
 
+    interface invariants
+        module procedure principal_invariants
+        module procedure mixed_invariants
+    end interface invariants
+
     
 contains
 
@@ -208,11 +213,11 @@ contains
 
     end function dev
 
-    !> Get invariants of 2nd order tensor
+    !> Get principal invariants of 2nd order tensor
     !!
     !! @param  A   Second order tensor
     !! @return res Array of invariants
-    pure function invariants(A) result(res)
+    pure function principal_invariants(A) result(res)
         real(kind=dp), dimension(3,3), intent(in) :: A
         real(kind=dp), dimension(3)               :: res
 
@@ -220,6 +225,26 @@ contains
         res(2) = 0.5 * (trace(A)**2 - trace(matmul(A,A)))
         res(3) = det(A)
 
-    end function invariants
+    end function principal_invariants
+
+    !> Get mixed invariants of two 2nd order tensor
+    !!
+    !! @param  A   Second order tensor
+    !! @param  B   Second order tensor
+    !! @return res Array of mixed invariants
+    pure function mixed_invariants(A,B) result(res)
+
+        use libtt_products, only: doubleContract
+
+        real(kind=dp), dimension(3,3), intent(in) :: A
+        real(kind=dp), dimension(3,3), intent(in) :: B
+        real(kind=dp), dimension(5)               :: res
+
+        res(1:3) = principal_invariants(A)
+        res(4)   = doubleContract(B, A)
+        res(5)   = doubleContract(B, matmul(A,A))
+
+    end function mixed_invariants
 
 end module libtt_common
+
