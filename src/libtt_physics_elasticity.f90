@@ -130,14 +130,14 @@ contains
                 do k = 1,3,1
                     do l = 1,3,1
                         res(i,j,k,l) = res(i,j,k,l) + &
-                                       invRightCauchyGreen(i,k) * invRightCauchyGreen(j,l) + &
-                                       invRightCauchyGreen(i,l) * invRightCauchyGreen(j,k)
+                                       0.5d0 * (invRightCauchyGreen(i,k) * invRightCauchyGreen(j,l) + &
+                                       invRightCauchyGreen(i,l) * invRightCauchyGreen(j,k))
                     end do
                 end do
             end do
         end do
 
-        res = 0.5*res
+        res = -res
 
     end function getDerivativeInvRCG
 
