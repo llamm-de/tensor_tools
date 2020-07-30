@@ -16,6 +16,8 @@ module libtt_physics_elasticity
     public :: getDerivativeInvRCG
     public :: getStVenant_stress
     public :: getStVenant_tangent
+    public :: getAnisotropicReese_stress
+    public :: getAnisotropicReese_tangent
     
     
 contains
@@ -172,5 +174,59 @@ contains
         res = lambda * dyad(eye(), eye()) + 2 * mu * eye(4)
 
     end function getStVenant_tangent
+
+    !> Anisotropic material model after Reese at al. 2000 (stress response)
+    !!
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @param  fibreDir         Fibre direction vector
+    !! @param  k                Material Parameter (stiffness)
+    !! @param  alpha            Material Parameter (shape)
+    !! @return res              2nd Piola Kirchhoff stress tensor
+    function getAnisotropicReese_stress(rightCauchyGreen, fibreDir, k, alpha) result(res)
+
+        use libtt_common  , only: invariants
+        use libtt_products, only: dyad, doubleContract
+
+        real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
+        real(kind=dp), dimension(3)  , intent(in) :: fibreDir
+        real(kind=dp)                , intent(in) :: k
+        real(kind=dp)                , intent(in) :: alpha
+        real(kind=dp), dimension(3,3)             :: res
+        real(kind=dp), dimension(3,3)             :: structuralTensor
+        real(kind=dp), dimension(5)               :: invars
+       
+        structuralTensor = dyad(fibreDir)
+        invars           = invariants(rightCauchyGreen, structuralTensor)
+
+        res = 2 * alpha * k * (invars(4) - 1)**(alpha-1) * structuralTensor
+
+    end function getAnisotropicReese_stress
+
+    !> Anisotropic material model after Reese at al. 2000 (tangent modulus)
+    !!
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @param  fibreDir         Fibre direction vector
+    !! @param  k                Material Parameter (stiffness)
+    !! @param  alpha            Material Parameter (shape)
+    !! @return res              4th order material tangent modulus (ref. config.)
+    function getAnisotropicReese_tangent(rightCauchyGreen, fibreDir, k, alpha) result(res)
+
+        use libtt_common,   only: invariants
+        use libtt_products, only: dyad
+
+        real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
+        real(kind=dp), dimension(3)  , intent(in) :: fibreDir
+        real(kind=dp)                , intent(in) :: k
+        real(kind=dp)                , intent(in) :: alpha
+        real(kind=dp), dimension(3,3,3,3)         :: res
+        real(kind=dp), dimension(3,3)             :: structuralTensor
+        real(kind=dp), dimension(5)               :: invars
+
+        structuralTensor = dyad(fibreDir)
+        invars           = invariants(rightCauchyGreen, structuralTensor)
+
+        res = 4 * alpha**2 * k * (invars(4) - 1)**(alpha - 2) * dyad(structuralTensor, structuralTensor)
+
+    end function getAnisotropicReese_tangent
 
 end module libtt_physics_elasticity
