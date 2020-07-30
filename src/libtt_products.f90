@@ -30,17 +30,21 @@ module libtt_products
     !> Dyadic product of tensors A and B
     interface operator(.dyad.)
         module procedure dyadic_ranks11
+        module procedure dyadic_ranks11_self
         module procedure dyadic_ranks12
         module procedure dyadic_ranks21
         module procedure dyadic_ranks22
+        module procedure dyadic_ranks22_self
     end interface 
     
     !> Dyadic product of tensors A and B
     interface dyad
         module procedure dyadic_ranks11
+        module procedure dyadic_ranks11_self
         module procedure dyadic_ranks12
         module procedure dyadic_ranks21
         module procedure dyadic_ranks22
+        module procedure dyadic_ranks22_self
     end interface dyad
 
 contains
@@ -128,6 +132,17 @@ contains
 
     end function dyadic_ranks11
 
+    !> Dyadic product of tensor of rank 1 with itself
+    !! @param a    Rank 1 tensor
+    !! @return res Rank 2 tensor
+    pure function dyadic_ranks11_self(a) result(res)
+        real(kind=dp), dimension(3), intent(in) :: a
+        real(kind=dp), dimension(3,3)           :: res
+        
+        res = dyadic_ranks11(a,a)
+
+    end function dyadic_ranks11_self
+
     !> Dyadic product of tensors of rank 1 and 2
     !! @param a    Rank 1 tensor
     !! @param b    Rank 2 tensor
@@ -202,5 +217,16 @@ contains
         end do
 
     end function dyadic_ranks22
+
+    !> Dyadic product of tensor of rank 2 with itself
+    !! @param a    Rank 2 tensor
+    !! @return res Rank 4 tensor
+    pure function dyadic_ranks22_self(a) result(res)
+        real(kind=dp), dimension(3,3), intent(in) :: a
+        real(kind=dp), dimension(3,3,3,3)         :: res
+
+        res = dyadic_ranks22(a,a)
+
+    end function dyadic_ranks22_self
 
 end module libtt_products
