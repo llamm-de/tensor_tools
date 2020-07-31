@@ -5,7 +5,7 @@ FLAGS=-Wall -o pretty_print.out
 MODFLAGS=-Wall -c
 SRCROOT=../../src
 
-pretty_print: main.f90 libtt_print.mod libtt_precision.mod
+pretty_print.out: main.f90 libtt_print.mod libtt_precision.mod
 	$(FC) $(FLAGS) main.f90 $(SRCROOT)/libtt_print.f90 $(SRCROOT)/libtt_precision.f90
 
 libtt_print.mod: $(SRCROOT)/libtt_print.f90 libtt_precision.mod

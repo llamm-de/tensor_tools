@@ -14,3 +14,6 @@ fi
 printf  "%s\n" "${green} Executing example. ${end}"
 ./pretty_print.out
 
+# Clean up
+printf  "%s\n" "${green} Removing build files. ${end}"
+make clean
