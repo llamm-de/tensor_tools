@@ -42,6 +42,19 @@ make
 ```
 Congratulations, now you should be able to include the installed library into your projects.
 
+### Include TensorTools into your project
+There are various possibilities to include the tensor tools library into your own project. A few of them are listed below.
+
+#### Use CMake
+The most easy way to include TensorTools to your poject is available if your project is build using CMake.
+
+#### Link against a static labrary
+After having build the static library as described above, you only have to tell your linker where to find the ```libtensortools.a``` file.
+
+#### Copy source files
+If you do not want to care about setting up CMake or configuring your build link against a static library, you can also use the quick and dirty way by copying the source files directly into your projects source directory.
+
+
 ## Testing
 If you want to run the tests for this framework, let CMake generate your build files and compile everything using
 ```
