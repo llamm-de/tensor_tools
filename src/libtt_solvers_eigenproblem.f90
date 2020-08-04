@@ -75,8 +75,9 @@ contains
     !! @param eigval Array of eigenvalues of A
     subroutine jacobi(A, eigvec, eigval)
 
-        use libtt_common,  only: eye, diag
-        use libtt_logical, only: isSquare, isSymmetric, isDiagonal
+        use libtt_common,    only: eye, diag
+        use libtt_logical,   only: isSquare, isSymmetric, isDiagonal
+        use libtt_constants, only: pi
 
         real(kind=dp), dimension(:,:), intent(in) :: A
         real(kind=dp), dimension(:,:)             :: eigvec
@@ -91,7 +92,6 @@ contains
         real(kind=dp)                              :: factor
         real(kind=dp), dimension(:,:), allocatable :: Q
         integer,       dimension(2)                :: idx
-        real(kind=dp), parameter                   :: pi = 4 * atan(1.0_8)
         
         if ((.NOT.isSquare(A)) .OR. (.NOT.isSymmetric(A))) then
             error stop "ERROR in JACOBI EIGENVALUE: Matrix is not square or symmetric!"
