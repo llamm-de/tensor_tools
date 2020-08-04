@@ -34,6 +34,23 @@ contains
         @assertEqual(expected_result, eye())
     end subroutine assert_eye
 
+    @test
+    subroutine assert_eye_nDim()
+        real(kind=dp), dimension(2,2) :: expected_result
+        expected_result = reshape((/1, 0, 0, 1/),&
+                                   (/2,2/))
+
+        @assertEqual(expected_result, eye(2))
+    end subroutine assert_eye_nDim
+
+    !@test
+    !subroutine assert_eye_4()
+    !    real(kind=dp), dimension(3,3,3,3) :: expected_result
+    !    expected_result = reshape((/1, 0, 0, 1/),&
+    !                               (/2,2/))
+
+        !@assertEqual(expected_result, eye_4())
+    !end subroutine assert_eye_4
 
     @test
     subroutine assert_symmetric()

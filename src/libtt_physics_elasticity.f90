@@ -2,7 +2,7 @@
 module libtt_physics_elasticity
 
     use libtt_precision
-    use libtt_common,   only: eye, inverse, det, trace
+    use libtt_common,   only: eye, eye_4, inverse, det, trace
     use libtt_products, only: dyad
     
     implicit none
@@ -171,7 +171,7 @@ contains
         real(kind=dp)                , intent(in) :: lambda
         real(kind=dp), dimension(3,3,3,3)         :: res
 
-        res = lambda * dyad(eye(), eye()) + 2 * mu * eye(4)
+        res = lambda * dyad(eye(), eye()) + 2 * mu * eye_4()
 
     end function getStVenant_tangent
 

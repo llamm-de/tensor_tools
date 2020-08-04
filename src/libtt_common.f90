@@ -11,6 +11,7 @@ module libtt_common
     public :: trace
     public :: det
     public :: eye
+    public :: eye_4
     public :: symmetric
     public :: skew
     public :: inverse
@@ -25,8 +26,8 @@ module libtt_common
     end interface diag
 
     interface eye
-        module procedure eye_2
-        module procedure eye_4
+        module procedure eye_matrix
+        module procedure eye_tensor
     end interface eye
 
     interface invariants
@@ -89,10 +90,27 @@ contains
               a(3,1)*a(1,3)*a(2,2)
     end function det
 
+    !> Identity matrix
+    !! 
+    !! @param  n   Dimension of identity matrix
+    !! @return res Identity matrix 
+    function eye_matrix(n) result(res)
+        integer, intent(in)           :: n
+        real(kind=dp), dimension(n,n) :: res
+
+        integer :: i
+
+        res = 0.0d0
+        do i = 1,n,1
+            res(i,i) = 1.0d0
+        end do
+
+    end function
+
     !> Identity tensor of 2nd order
     !! 
     !! @return res Identity tensor of 2nd order
-    function eye_2() result(res)
+    function eye_tensor() result(res)
         real(kind=dp), dimension(3,3) :: res
 
         res      = 0.0d0
@@ -100,34 +118,28 @@ contains
         res(2,2) = 1.0d0
         res(3,3) = 1.0d0
 
-    end function eye_2
+    end function eye_tensor
 
     !> Identity tensor of higher rank than 4
     !! 
     !! @return res Identity tensor of higher rank
-    function eye_4(rank) result(res)
-        integer, intent(in)               :: rank
+    function eye_4() result(res)
         real(kind=dp), dimension(3,3,3,3) :: res
         integer                           :: i
         integer                           :: j
         integer                           :: k
         integer                           :: l
 
-        if (rank == 4) then
-            do i =1,3,1
-                do j = 1,3,1
-                    do k = 1,3,1
-                        do l = 1,3,1
-                            res(i,j,k,l) = res(i,j,k,l) + &
-                                           0.5*(kronecker(i,k)*kronecker(j,l) + kronecker(i,l)*kronecker(j,k))
-                        end do
+        do i =1,3,1
+            do j = 1,3,1
+                do k = 1,3,1
+                    do l = 1,3,1
+                        res(i,j,k,l) = res(i,j,k,l) + &
+                                        0.5*(kronecker(i,k)*kronecker(j,l) + kronecker(i,l)*kronecker(j,k))
                     end do
                 end do
             end do
-        else
-            write(*,*) "ERROR in function Eye(): Input of rank ", rank, " not supported yet!" 
-            error stop
-        end if
+        end do
 
     end function eye_4
 
