@@ -8,6 +8,7 @@ module libtt_logical
 
     public :: isDiagonal
     public :: isSymmetric
+    public :: isSquare
     
 contains
 
@@ -35,6 +36,9 @@ contains
     end function isDiagonal
 
     !> Check if matrix/tensor is symmetric
+    !!
+    !! @param A   Square matrix / tensor of 2nd order
+    !! @param res Logical (True if A is symmetric)
     pure function isSymmetric(A) result(res)
         real(kind=dp), dimension(:,:), intent(in) :: A
         logical                                   :: res
@@ -53,5 +57,24 @@ contains
         end do
 
     end function isSymmetric
+
+    !> Check if matrix is square
+    !!
+    !! @param A   Matrix / tensor of 2nd order
+    !! @param res Logical (True if A is square)
+    pure function isSquare(A) result(res)
+        real(kind=dp), dimension(:,:), intent(in) :: A
+        logical                                   :: res
+        integer, dimension(2)                     :: shp
+
+        shp = shape(A)
+        if (shp(1) /= shp(2)) then
+            res = .FALSE.
+            return
+        end if
+
+        res = .TRUE.
+
+    end function isSquare
     
 end module libtt_logical

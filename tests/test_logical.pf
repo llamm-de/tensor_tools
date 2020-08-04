@@ -27,7 +27,7 @@ contains
     end subroutine assert_isDiagonal_false
 
     @test
-    subroutine assert_isSymmetric_true
+    subroutine assert_isSymmetric_true()
 
         A      = 0.0d0
         A(1,1) = 1.2d0
@@ -40,7 +40,7 @@ contains
     end subroutine assert_isSymmetric_true
 
     @test
-    subroutine assert_isSymmetric_false
+    subroutine assert_isSymmetric_false()
 
         A      = 0.0d0
         A(1,1) = 1.2d0
@@ -49,5 +49,21 @@ contains
 
         @assertFalse(isSymmetric(A))
     end subroutine assert_isSymmetric_false
+
+    @test
+    subroutine assert_isSquare_true()
+
+        call random_number(A)
+        @assertTrue(isSquare(A))
+    end subroutine assert_isSquare_true
+
+    @test
+    subroutine assert_isSquare_false()
+        real(kind=dp), dimension(2,3) :: B
+
+        call random_number(B)
+
+        @assertFalse(isSymmetric(B))
+    end subroutine assert_isSquare_false
 
 end module test_logical
