@@ -9,5 +9,7 @@ module libtt
     use libtt_solvers_gauss
     use libtt_physics_elasticity
     use libtt_voigt
+    use libtt_logical
+    use libtt_solvers_eigenproblem
     
 end module libtt

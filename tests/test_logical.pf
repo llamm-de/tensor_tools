@@ -1,0 +1,29 @@
+module test_logical
+    use funit
+    use libtt_precision
+    use libtt_logical
+    use libtt_common, only: eye
+
+    implicit none
+
+    real(kind=dp), dimension(3,3) :: A
+
+contains
+
+    @test
+    subroutine assert_isDiagonal_true()
+               
+        A = eye()
+
+        @assertTrue(isDiagonal(A))
+    end subroutine assert_isDiagonal_true
+
+    @test
+    subroutine assert_isDiagonal_false()
+
+        A      = 0.0d0
+        A(1,2) = 1.0d0
+        @assertFalse(isDiagonal(A))
+    end subroutine assert_isDiagonal_false
+
+end module test_logical

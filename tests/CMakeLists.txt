@@ -22,3 +22,8 @@ add_pfunit_ctest (libtt_solvers_testSuite
     TEST_SOURCES test_solvers.pf
     LINK_LIBRARIES tensortools
 )
+
+add_pfunit_ctest (libtt_logical_testSuite
+    TEST_SOURCES test_logical.pf
+    LINK_LIBRARIES tensortools
+)
