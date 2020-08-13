@@ -134,8 +134,7 @@ contains
             do j = 1,3,1
                 do k = 1,3,1
                     do l = 1,3,1
-                        res(i,j,k,l) = res(i,j,k,l) + &
-                                        0.5*(kronecker(i,k)*kronecker(j,l) + kronecker(i,l)*kronecker(j,k))
+                        res(i,j,k,l) = 0.5*(kronecker(i,k)*kronecker(j,l) + kronecker(i,l)*kronecker(j,k))
                     end do
                 end do
             end do
