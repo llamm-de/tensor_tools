@@ -81,7 +81,7 @@ contains
         invRCG = inverse(rightCauchyGreen)
         J      = sqrt(det(rightCauchyGreen))
 
-        res = mu * (eye() - invRCG) + lambda/2 * (J**2 - 1)*invRCG
+        res = mu * (eye() - invRCG) + lambda/2.0d0 * (J**2 - 1)*invRCG
 
     end function getNeoHooke_stress
 
@@ -106,8 +106,8 @@ contains
         J                = sqrt(det(rightCauchyGreen))
         derivativeInvRCG = getDerivativeInvRCG(invRCG)
 
-        res = 2*(lambda/2  * (J**2 - 1) - mu) * derivativeInvRCG + &
-              lambda * J**2 * dyad(invRCG, invRCG)
+        res = 2.0d0 * (lambda/2.0d0  * (J**2 - 1) - mu) * derivativeInvRCG + &
+              lambda * J**2 * dyad(invRCG)
 
     end function getNeoHooke_tangent
 
@@ -130,14 +130,14 @@ contains
                 do k = 1,3,1
                     do l = 1,3,1
                         res(i,j,k,l) = res(i,j,k,l) + &
-                                       0.5d0 * (invRightCauchyGreen(i,k) * invRightCauchyGreen(j,l) + &
-                                       invRightCauchyGreen(i,l) * invRightCauchyGreen(j,k))
+                                       0.5d0 * (invRightCauchyGreen(i,k) * invRightCauchyGreen(l,j) + &
+                                       invRightCauchyGreen(i,l) * invRightCauchyGreen(k,j))
                     end do
                 end do
             end do
         end do
 
-        res = -res
+        res = -1.0d0 * res
 
     end function getDerivativeInvRCG
 
@@ -167,11 +167,15 @@ contains
     !! @param  lambda           Material Parameter (Lame lambda)
     !! @return res              4th order material tangent modulus (ref. config.)
     function getStVenant_tangent(mu, lambda) result(res)
+        
+        use libtt_print
         real(kind=dp)                , intent(in) :: mu
         real(kind=dp)                , intent(in) :: lambda
         real(kind=dp), dimension(3,3,3,3)         :: res
 
-        res = lambda * dyad(eye(), eye()) + 2 * mu * eye_4()
+        res = eye_4()
+        res = 2 * mu * res
+        res = res + lambda * dyad(eye())
 
     end function getStVenant_tangent
 
