@@ -5,14 +5,14 @@ module libtt_physics_transformation
     implicit none
     private
 
-    public :: push_forward
+    public :: pushForward
     
-    interface push_forward
+    interface pushForward
         module procedure push_stress
         module procedure push_tangent
         !module procedure push_stress_voigt
         !module procedure push_tangent_voigt
-    end interface push_forward
+    end interface pushForward
     
 contains
 
