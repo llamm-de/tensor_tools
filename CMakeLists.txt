@@ -47,13 +47,21 @@ include(cmake_config/${CMAKE_Fortran_COMPILER_ID}.cmake RESULT_VARIABLE found)
 if(NOT found)
     message(FATAL_ERROR "Unrecognized Fortran compiler. Only gfortran and ifort are supperted!")
 else()
-    message(STATUS "${CMAKE_Fortran_COMPILER_ID} compiler selected!")
+    message(STATUS "${CMAKE_Fortran_COMPILER_ID} compiler selected.")
 endif()
 
 #----------------------------------------------------------------------#
 # Set directory for Fortran modules
 #----------------------------------------------------------------------#
 set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
+
+#----------------------------------------------------------------------#
+# Find LAPACK
+#----------------------------------------------------------------------#
+find_package(LAPACK)
+if(NOT LAPACK_FOUND)
+    message(FATAL_ERROR "LAPACK not found! Please install Lapack first!")
+endif()
 
 #----------------------------------------------------------------------#
 # Add subdirectories
@@ -88,6 +96,8 @@ if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) AND LIBTT_DOCS)
         message(STATUS "LIBTT: Doxygen not found, not building docs")
     endif()
 endif()
+
+
 
 #----------------------------------------------------------------------#
 # Installation

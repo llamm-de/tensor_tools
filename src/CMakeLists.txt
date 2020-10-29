@@ -24,3 +24,4 @@ set(SOURCE  libtt.f90
 # Define library to build
 add_library(tensortools ${SOURCE})
 target_include_directories(tensortools PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(tensortools LAPACK_LIBRARIES)
