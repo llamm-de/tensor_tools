@@ -1,7 +1,7 @@
 module test_common
     use funit
     use libtt_precision
-    use libtt_common
+    use libtt_common,   only: kronecker,trace,det,inverseMatrix
 
     implicit none
 

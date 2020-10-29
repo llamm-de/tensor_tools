@@ -47,13 +47,26 @@ include(cmake_config/${CMAKE_Fortran_COMPILER_ID}.cmake RESULT_VARIABLE found)
 if(NOT found)
     message(FATAL_ERROR "Unrecognized Fortran compiler. Only gfortran and ifort are supperted!")
 else()
-    message(STATUS "${CMAKE_Fortran_COMPILER_ID} compiler selected!")
+    message(STATUS "${CMAKE_Fortran_COMPILER_ID} compiler selected.")
 endif()
 
 #----------------------------------------------------------------------#
 # Set directory for Fortran modules
 #----------------------------------------------------------------------#
 set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
+
+#----------------------------------------------------------------------#
+# Find LAPACK
+#----------------------------------------------------------------------#
+option(LIBTT_LAPACK "Enable/Disable Lapack routines" ON)
+if(LIBTT_LAPACK)
+    find_package(LAPACK)
+    if(NOT LAPACK_FOUND)
+        message(FATAL_ERROR "LAPACK not found! Please install Lapack first!")
+    endif()
+else()
+    message(STATUS "No Lapack routines will be build. \n   Enable with -DLIBTT_LAPACK=ON")
+endif()
 
 #----------------------------------------------------------------------#
 # Add subdirectories
@@ -65,7 +78,7 @@ add_subdirectory(src)
 # Testing
 # Examples: https://github.com/Goddard-Fortran-Ecosystem/pFUnit_demos/tree/main/Basic
 #----------------------------------------------------------------------#
-option(LIBTT_TESTS "Enable/disable testing framework" OFF)
+option(LIBTT_TESTS "Enable/disable testing framework" ON)
 if(LIBTT_TESTS)
     find_package(PFUNIT REQUIRED)
     enable_testing()
@@ -88,6 +101,8 @@ if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME) AND LIBTT_DOCS)
         message(STATUS "LIBTT: Doxygen not found, not building docs")
     endif()
 endif()
+
+
 
 #----------------------------------------------------------------------#
 # Installation

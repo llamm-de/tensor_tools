@@ -58,7 +58,7 @@ If you do not want to care about setting up CMake or configuring your build link
 ## Testing
 If you want to run the tests for this framework, let CMake generate your build files and compile everything using
 ```
-cmake -DLIBTT_TEST=ON -DCMAKE_PREFIX_PATH=<path/to/pfunit/install/dir> ..
+cmake -DLIBTT_TESTS=ON -DCMAKE_PREFIX_PATH=<path/to/pfunit/install/dir> ..
 make
 ```
 Now you can run the tests by calling
