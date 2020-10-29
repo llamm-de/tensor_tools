@@ -16,7 +16,6 @@ module libtt_common
     public :: skew
     public :: inverse
     public :: inverseMatrix
-    public :: inverseLapack
     public :: diag
     public :: dev
     public :: invariants
@@ -203,34 +202,6 @@ contains
         res(3,3) = A(1,1)*A(2,2) - A(2,1)*A(1,2)
         res      = 1/det(A) * res
     end function inverse
-
-    !> Inverse of NxN Matrix
-    !! Computed using LAPACK routines
-    !!
-    !! @param  A   NxN Matrix
-    !! @return res Inverse of A
-    function inverseLapack(A) result(res)
-        real(kind=dp), dimension(:,:)                  :: A
-        real(kind=dp), dimension(size(A,1), size(A,2)) :: res
-
-        real(kind=dp), dimension(size(A,1)) :: work
-        integer, dimension(size(A,1))       :: ipiv
-        integer                             :: n, info
-
-        res = A
-        n   = size(A,1)
-        ! SGETRF computes an LU factorization of a general M-by-N matrix A
-        ! using partial pivoting with row interchanges.
-        call SGETRF(n,n,res,n,ipiv,info)
-
-        if (info.ne.0) stop 'Matrix is numerically singular!'
-        
-        ! SGETRI computes the inverse of a matrix using the LU factorization
-        ! computed by SGETRF.
-        call SGETRI(n,res,n,ipiv,work,n,info)
-        if (info.ne.0) stop 'Matrix inversion failed!'
-
-    end function inverseLapack
 
     !> Get diagonal element from tensor 2nd order
     !!

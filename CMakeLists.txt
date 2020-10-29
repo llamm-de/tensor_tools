@@ -73,7 +73,7 @@ add_subdirectory(src)
 # Testing
 # Examples: https://github.com/Goddard-Fortran-Ecosystem/pFUnit_demos/tree/main/Basic
 #----------------------------------------------------------------------#
-option(LIBTT_TESTS "Enable/disable testing framework" OFF)
+option(LIBTT_TESTS "Enable/disable testing framework" ON)
 if(LIBTT_TESTS)
     find_package(PFUNIT REQUIRED)
     enable_testing()

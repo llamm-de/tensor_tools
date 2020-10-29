@@ -9,6 +9,7 @@
 set(SOURCE  libtt.f90
             libtt_exception.f90
             libtt_common.f90
+            libtt_common_lapack.f90
             libtt_products.f90
             libtt_physics_elasticity.f90
             libtt_precision.f90
@@ -22,6 +23,6 @@ set(SOURCE  libtt.f90
             )
 
 # Define library to build
-add_library(tensortools ${SOURCE})
-target_include_directories(tensortools PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(tensortools LAPACK_LIBRARIES)
+add_library(libtt ${SOURCE})
+target_include_directories(libtt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(libtt ${LAPACK_LIBRARIES})
