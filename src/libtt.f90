@@ -11,5 +11,6 @@ module libtt
     use libtt_voigt
     use libtt_logical
     use libtt_solvers_eigenproblem
+    use libtt_constants
     
 end module libtt

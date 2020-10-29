@@ -22,7 +22,7 @@ endif()
 
 
 #----------------------------------------------------------------------#
-# Set default build type to debug
+# Set default compilaation to debug
 #----------------------------------------------------------------------#
 if(NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug
@@ -33,12 +33,13 @@ else()
 endif()
 
 #----------------------------------------------------------------------#
-# Set compiler options (only gfortran at the moment)
+# Set compiler options
 #----------------------------------------------------------------------#
-set(CMAKE_Fortan_FLAGS_DEBUG "-Wall -Wextra -Wsurprising -0g -g"
-    CACHE STRING "Compiler flags for debugging")
-set(CMAKE_Fortan_FLAGS_RELEASE "-O2"
-    CACHE STRING "Compiler flags for production")
+include(cmake_config/${CMAKE_Fortran_COMPILER_ID}.cmake RESULT_VARIABLE found)
+
+if(NOT found)
+  message( FATAL_ERROR "Unrecognized Fortran compiler. Only gfortran and ifort are supperted!")
+endif()
 
 #----------------------------------------------------------------------#
 # Project & language definition
