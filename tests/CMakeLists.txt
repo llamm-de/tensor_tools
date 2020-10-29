@@ -27,3 +27,13 @@ add_pfunit_ctest (libtt_logical_testSuite
     TEST_SOURCES test_logical.pf
     LINK_LIBRARIES libtt
 )
+
+# Lapack based routines
+if(LIBTT_LAPACK)
+
+    add_pfunit_ctest (libtt_common_lapack_testSuite
+    TEST_SOURCES test_common_lapack.pf
+    LINK_LIBRARIES libtt
+    )
+
+endif()

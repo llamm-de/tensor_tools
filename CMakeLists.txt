@@ -58,9 +58,14 @@ set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
 #----------------------------------------------------------------------#
 # Find LAPACK
 #----------------------------------------------------------------------#
-find_package(LAPACK)
-if(NOT LAPACK_FOUND)
-    message(FATAL_ERROR "LAPACK not found! Please install Lapack first!")
+option(LIBTT_LAPACK "Enable/Disable Lapack routines" ON)
+if(LIBTT_LAPACK)
+    find_package(LAPACK)
+    if(NOT LAPACK_FOUND)
+        message(FATAL_ERROR "LAPACK not found! Please install Lapack first!")
+    endif()
+else()
+    message(STATUS "No Lapack routines will be build. \n   Enable with -DLIBTT_LAPACK=ON")
 endif()
 
 #----------------------------------------------------------------------#
