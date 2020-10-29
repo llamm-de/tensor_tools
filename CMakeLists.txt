@@ -20,9 +20,16 @@ endif()
 #                      Override with -DCMAKE_INSTALL_PREFIX=<path>.")
 #endif()
 
+#----------------------------------------------------------------------#
+# Project & language definition
+#----------------------------------------------------------------------#
+project(TensorTools VERSION 0.1.0
+                    DESCRIPTION "A small modern fortran library for tensor calculus"
+                    LANGUAGES NONE)
+enable_language(Fortran)
 
 #----------------------------------------------------------------------#
-# Set default build type to debug
+# Set default compilaation to debug
 #----------------------------------------------------------------------#
 if(NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug
@@ -33,20 +40,15 @@ else()
 endif()
 
 #----------------------------------------------------------------------#
-# Set compiler options (only gfortran at the moment)
+# Set compiler options
 #----------------------------------------------------------------------#
-set(CMAKE_Fortan_FLAGS_DEBUG "-Wall -Wextra -Wsurprising -0g -g"
-    CACHE STRING "Compiler flags for debugging")
-set(CMAKE_Fortan_FLAGS_RELEASE "-O2"
-    CACHE STRING "Compiler flags for production")
+include(cmake_config/${CMAKE_Fortran_COMPILER_ID}.cmake RESULT_VARIABLE found)
 
-#----------------------------------------------------------------------#
-# Project & language definition
-#----------------------------------------------------------------------#
-project(TensorTools VERSION 0.1.0
-                    DESCRIPTION "A small modern fortran library for tensor calculus"
-                    LANGUAGES NONE)
-enable_language(Fortran)
+if(NOT found)
+    message(FATAL_ERROR "Unrecognized Fortran compiler. Only gfortran and ifort are supperted!")
+else()
+    message(STATUS "${CMAKE_Fortran_COMPILER_ID} compiler selected!")
+endif()
 
 #----------------------------------------------------------------------#
 # Set directory for Fortran modules
