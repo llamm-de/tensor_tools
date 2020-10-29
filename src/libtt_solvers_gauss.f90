@@ -159,9 +159,9 @@ contains
         integer, intent(in)                      :: j
 
         if (a(j,j) == 0) then
-            write(*,'(A, I3, A, I3, A)') "Zero pivot element at (", j, ",", j, ")!"
-            write(*,'(A)') "Matrix might be inaccurate!"
-            write(*,'(A)') "Process terminated!"
+            write(*,'(/, 3X, A, I3, A, I3, A)') "ERROR in GAUSS(): Zero pivot element at (", j, ",", j, ")!"
+            write(*,'(3X, A)') "Matrix might be singular!"
+            write(*,'(3X, A, /)') "Process terminated!"
             error stop
         end if
 

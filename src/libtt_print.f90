@@ -121,7 +121,7 @@ contains
     subroutine print_tensorInfo(rank)
         integer, intent(in) :: rank
 
-        write(*,'(/, A, I1, A)') "Tensor of rank ", rank, ":"
+        write(*,'(/, 3X, A, I1, A)') "Tensor of rank ", rank, ":"
 
     end subroutine print_tensorInfo
 
