@@ -26,8 +26,8 @@ set(SOURCE  libtt.f90
             )
 
 # Define library to build
-add_library(libtt ${SOURCE})
-target_include_directories(libtt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(tt ${SOURCE})
+target_include_directories(tt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 if(LIBTT_LAPACK)
-    target_link_libraries(libtt libtt_lapack)
+    target_link_libraries(tt tt_lapack)
 endif()
