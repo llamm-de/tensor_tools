@@ -17,12 +17,13 @@ git clone https://github.com/llamm-de/tensor_tools.git
 ### Prerequisites & Dependencies
 This package uses [CMake](https://cmake.org/) for the creation of build files. In order to build this package yourself, you would need to have CMake installed on your system.
 
-If you want to run the tests for this package or generate an documentation, you need to have the following packages installed on your system:
+Some optional third party dependencies are:
 
-* [**pFUnit**](https://github.com/Goddard-Fortran-Ecosystem/pFUnit) - A unit testing framework for Fortran
-* [**Doxygen**](https://www.doxygen.nl/) - Automated documentation tool
+* [**pFUnit**](https://github.com/Goddard-Fortran-Ecosystem/pFUnit) (Optional) - To run the unit test for TensorTools
+* [**Doxygen**](https://www.doxygen.nl/) (Optional) - To automatically build the documentation of TensorTools
+* [**LAPACK**](http://www.netlib.org/lapack/) (Optional) - To use the more advanced and performance oriented algorithms in TensorTools
 
-These dependencies are disabled by default. If you wish to use them, you can activate them by providing the options ```LIBTT_TESTS=ON``` and/or ```LIBTT_DOCS=ON``` when running CMake.
+These dependencies are disabled by default. If you wish to use them, you can activate them by providing the options ```LIBTT_TESTS=ON```, ```LIBTT_LAPACK=ON``` and/or ```LIBTT_DOCS=ON``` when running CMake.
 
 ### Build & Installation
 First create a build directory
@@ -49,11 +50,16 @@ There are various possibilities to include the tensor tools library into your ow
 The most easy way to include TensorTools to your poject is available if your project is build using CMake.
 
 #### Link against a static labrary
-After having build the static library as described above, you only have to tell your linker where to find the ```libtensortools.a``` file.
+After having build the static library as described above, you only have to tell your linker where to find the ```libtt.a``` file.
 
 #### Copy source files
 If you do not want to care about setting up CMake or configuring your build link against a static library, you can also use the quick and dirty way by copying the source files directly into your projects source directory.
 
+## LAPACK routines
+TensorTools offers some advanced and/or computational efficient routines which are based on the LAPACK library for linear algebra. The build of these routines is disabled by default. If you want to use them, you would need to set the corresponding option when running CMake, e.g.
+```
+cmake -DLIBTT_LAPACK=ON ..
+```
 
 ## Testing
 If you want to run the tests for this framework, let CMake generate your build files and compile everything using
