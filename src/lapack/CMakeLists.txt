@@ -13,4 +13,4 @@ set(SOURCE
 # Define library to build
 add_library(tt_lapack ${SOURCE})
 target_include_directories(tt_lapack PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(tt_lapack ${LAPACK_LIBRARIES})
+target_link_libraries(tt_lapack tt ${LAPACK_LIBRARIES})

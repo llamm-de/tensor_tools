@@ -58,7 +58,7 @@ set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR}/modules)
 #----------------------------------------------------------------------#
 # Find LAPACK
 #----------------------------------------------------------------------#
-option(LIBTT_LAPACK "Enable/Disable Lapack routines" ON)
+option(LIBTT_LAPACK "Enable/Disable Lapack routines" OFF)
 if(LIBTT_LAPACK)
     find_package(LAPACK)
     if(NOT LAPACK_FOUND)
@@ -78,7 +78,7 @@ add_subdirectory(src)
 # Testing
 # Examples: https://github.com/Goddard-Fortran-Ecosystem/pFUnit_demos/tree/main/Basic
 #----------------------------------------------------------------------#
-option(LIBTT_TESTS "Enable/disable testing framework" ON)
+option(LIBTT_TESTS "Enable/disable testing framework" OFF)
 if(LIBTT_TESTS)
     find_package(PFUNIT REQUIRED)
     enable_testing()
