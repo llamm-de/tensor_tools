@@ -8,11 +8,15 @@ module libtt_physics_elasticity
     implicit none
     private
 
+    real(kind=dp), dimension(5), parameter :: ab_coefficients = [1/2.d0, 1/20.d0, 11/1050.d0, 19/7000.d0, 519/673750.d0]
+
     public :: getRightCauchyGreen
     public :: getLeftCauchyGreen
     public :: getGreenLagrange
     public :: getNeoHooke_stress
     public :: getNeoHooke_tangent
+    public :: getArrudaBoyce_stress
+    public :: getArrudaBoyce_energy
     public :: getDerivativeInvRCG
     public :: getStVenant_stress
     public :: getStVenant_tangent
@@ -111,6 +115,73 @@ contains
 
     end function getNeoHooke_tangent
 
+
+    !> Arruda Boyce material model (material tangent modulus)
+    !! Based on the formulation of the strain energy function as:
+    !! psi = mu * SUM_k ( C_k / N^(k-1) * (trace(C)^k - 3^k)) - mu * ln(J) + lambda/4 *(J^2 - 1 - 2*ln(J))
+    !!
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @param  mu               Material Parameter (Lame mu)
+    !! @param  lambda           Material Parameter (Lame lambda)
+    !! @param  N                Material Parameter (Chain length)
+    !! @return res              Energy
+    function getArrudaBoyce_energy(rightCauchyGreen, mu, lambda, N) result(res) 
+        real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
+        real(kind=dp)                , intent(in) :: mu
+        real(kind=dp)                , intent(in) :: N
+        real(kind=dp)                , intent(in) :: lambda
+        real(kind=dp), dimension(3,3)             :: res
+        real(kind=dp), dimension(3,3)             :: invRCG
+        real(kind=dp)                             :: J
+        real(kind=dp)                             :: ab_sum
+        integer                                   :: i
+
+        invRCG = inverse(rightCauchyGreen)
+        J      = sqrt(det(rightCauchyGreen))
+        
+        ab_sum = 0 
+        do i = 1,5,1
+            ab_sum = ab_sum + ab_coefficients(i)/N**(i-1) * ( trace(rightCauchyGreen)**i - 3**i ) 
+        end do 
+        
+        res    = mu * (ab_sum - log(J))  + lambda/4.0d0 * (J**2 - 1) * invRCG
+
+    end function getArrudaBoyce_energy
+
+
+    !> Arruda Boyce material model (material tangent modulus)
+    !! Based on the formulation of the strain energy function as:
+    !! psi = mu * SUM_k ( C_k / N^(k-1) * (trace(C)^k - 3^k)) - mu * ln(J) + lambda/4 *(J^2 - 1 - 2*ln(J))
+    !!
+    !! @param  rightCauchyGreen Right Cauchy Green strain tensor
+    !! @param  mu               Material Parameter (Lame mu)
+    !! @param  lambda           Material Parameter (Lame lambda)
+    !! @param  N                Material Parameter (Chain length)
+    !! @return res              2nd Piola Kirchhoff stress tensor
+    function getArrudaBoyce_stress(rightCauchyGreen, mu, lambda, N) result(res) 
+        real(kind=dp), dimension(3,3), intent(in) :: rightCauchyGreen
+        real(kind=dp)                , intent(in) :: mu
+        real(kind=dp)                , intent(in) :: N
+        real(kind=dp)                , intent(in) :: lambda
+        real(kind=dp), dimension(3,3)             :: res
+        real(kind=dp), dimension(3,3)             :: invRCG
+        real(kind=dp)                             :: J
+        real(kind=dp)                             :: ab_sum
+        integer                                   :: i
+
+        invRCG = inverse(rightCauchyGreen)
+        J      = sqrt(det(rightCauchyGreen))
+        
+        ab_sum = 0 
+        do i = 1,5,1
+            ab_sum = ab_sum + ab_coefficients(i)/N**(i-1) * i * trace(rightCauchyGreen)**(i-1)
+        end do 
+        
+        res    = 2 * (mu * (ab_sum * eye() - 0.5d0 * invRCG) + lambda/4.0d0 * (J**2 - 1) * invRCG)
+
+    end function getArrudaBoyce_stress
+
+    
     !> Derivative of inverse of right Cauchy Green wrt. the right Cauchy Green tensor
     !!
     !! @param  invRightCauchyGreen Inverse of right Cauchy Green strain tensor
