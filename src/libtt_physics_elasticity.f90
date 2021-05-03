@@ -130,13 +130,11 @@ contains
         real(kind=dp)                , intent(in) :: mu
         real(kind=dp)                , intent(in) :: N
         real(kind=dp)                , intent(in) :: lambda
-        real(kind=dp), dimension(3,3)             :: res
-        real(kind=dp), dimension(3,3)             :: invRCG
+        real(kind=dp)                             :: res
         real(kind=dp)                             :: J
         real(kind=dp)                             :: ab_sum
         integer                                   :: i
 
-        invRCG = inverse(rightCauchyGreen)
         J      = sqrt(det(rightCauchyGreen))
         
         ab_sum = 0 
@@ -144,7 +142,7 @@ contains
             ab_sum = ab_sum + ab_coefficients(i)/N**(i-1) * ( trace(rightCauchyGreen)**i - 3**i ) 
         end do 
         
-        res    = mu * (ab_sum - log(J))  + lambda/4.0d0 * (J**2 - 1) * invRCG
+        res    = mu * (ab_sum - log(J))  + lambda/4.0d0 * (J**2 - 1 - 2*log(J))
 
     end function getArrudaBoyce_energy
 
@@ -181,7 +179,7 @@ contains
 
     end function getArrudaBoyce_stress
 
-    
+
     !> Derivative of inverse of right Cauchy Green wrt. the right Cauchy Green tensor
     !!
     !! @param  invRightCauchyGreen Inverse of right Cauchy Green strain tensor
